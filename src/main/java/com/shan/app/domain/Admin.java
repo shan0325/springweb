@@ -1,11 +1,17 @@
 package com.shan.app.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -14,6 +20,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name="tb_admin")
 public class Admin {
 
 	@Id
@@ -47,5 +54,13 @@ public class Admin {
 	private Date regDate;
 	
 	private Date updateDate;
+	
+	@ManyToMany
+	@JoinTable(
+		name="tb_admin_authority",
+		joinColumns={@JoinColumn(name="id")},
+		inverseJoinColumns={@JoinColumn(name="authority")}
+	)
+	private Set<Authority> authorities = new HashSet<>(); 
 	
 }
