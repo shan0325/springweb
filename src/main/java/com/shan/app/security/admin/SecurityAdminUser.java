@@ -31,5 +31,4 @@ public class SecurityAdminUser extends User {
 		});
 		return list;
 	}
-
 }

@@ -1,11 +1,16 @@
 package com.shan.app.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
@@ -24,4 +29,7 @@ public class Authority {
 	@NotBlank
 	@Column(name="authority_name", nullable=false, length=200)
 	private String authorityName;
+	
+	@ManyToMany(mappedBy="authorities")
+	private Set<Admin> admins = new HashSet<Admin>();
 }
