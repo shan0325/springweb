@@ -2,6 +2,7 @@ package com.shan.app.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -34,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/cms/login").permitAll()
+				.antMatchers("/cms/signup").permitAll()
+				.antMatchers(HttpMethod.POST ,"/cms/admin").permitAll()
 				.antMatchers("/cms/**").hasRole("ADMIN")
 				.antMatchers("**").permitAll()
 			.and()
