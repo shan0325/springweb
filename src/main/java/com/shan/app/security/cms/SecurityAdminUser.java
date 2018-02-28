@@ -1,4 +1,4 @@
-package com.shan.app.security.admin;
+package com.shan.app.security.cms;
 
 import java.util.HashSet;
 import java.util.Set;

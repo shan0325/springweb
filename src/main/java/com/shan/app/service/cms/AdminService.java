@@ -1,34 +1,34 @@
-package com.shan.app.service.admin;
+package com.shan.app.service.cms;
 
 import java.util.Date;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shan.app.domain.Admin;
-import com.shan.app.repository.admin.AdminRepository;
-import com.shan.app.service.admin.dto.AdminDTO;
+import com.shan.app.repository.cms.AdminRepository;
+import com.shan.app.service.cms.dto.AdminDTO;
 import com.shan.app.web.errors.AdminDuplicatedException;
 
-@Service("adminAdminService")
+@Service("cmsAdminService")
 @Transactional
 public class AdminService {
 	
-	@Resource(name="adminAdminRepository")
+	@Resource(name="cmsAdminRepository")
 	private AdminRepository adminRepository;
 	
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private PasswordEncoder bCryptPasswordEncoder;
 
 	public Admin createAdmin(AdminDTO.Create adminDTO) {
 		
 		Admin adminDetail = adminRepository.findByUserId(adminDTO.getUserId());
-		if(adminDetail == null) {
-			throw new AdminDuplicatedException("Already used adminId");
+		if(adminDetail != null) {
+			throw new AdminDuplicatedException("Already used userId");
 		}
 		
 		Admin admin = new Admin();

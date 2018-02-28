@@ -1,10 +1,12 @@
-package com.shan.app.web.admin;
+package com.shan.app.web.cms;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.shan.app.web.errors.GlobalExceptionHandler;
 
 @Controller
 @RequestMapping("/cms")

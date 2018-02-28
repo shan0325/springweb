@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.shan.app.security.admin.CustomLoginSuccessHandler;
-import com.shan.app.security.admin.CustomUserDetailService;
+import com.shan.app.security.cms.CustomLoginSuccessHandler;
+import com.shan.app.security.cms.CustomUserDetailService;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

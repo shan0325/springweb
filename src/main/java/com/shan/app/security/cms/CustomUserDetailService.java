@@ -1,4 +1,4 @@
-package com.shan.app.security.admin;
+package com.shan.app.security.cms;
 
 import java.util.Optional;
 
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.shan.app.repository.admin.AdminRepository;
+import com.shan.app.repository.cms.AdminRepository;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
