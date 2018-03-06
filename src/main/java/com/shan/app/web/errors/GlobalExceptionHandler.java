@@ -189,8 +189,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(AdminDuplicatedException.class)
 	public ResponseEntity<Object> handleAdminDuplicatedException(AdminDuplicatedException ex) {
-		String error = "Already used userId";
-		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
+		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+		apiError.setMessage("이미 등록된 아이디 입니다.");
+		apiError.setDebugMessage(ex.getMessage());
+		return buildResponseEntity(apiError);
 	}
 	
 	private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {

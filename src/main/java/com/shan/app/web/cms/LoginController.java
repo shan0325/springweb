@@ -10,7 +10,7 @@ import com.shan.app.web.errors.GlobalExceptionHandler;
 
 @Controller
 @RequestMapping("/cms")
-public class AdminLoginController {
+public class LoginController {
 	
 	@GetMapping("/login")
 	public String loginForm(HttpServletRequest request) {

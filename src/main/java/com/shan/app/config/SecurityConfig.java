@@ -35,8 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/cms/login").permitAll()
-				.antMatchers("/cms/signup").permitAll()
-				.antMatchers(HttpMethod.POST ,"/cms/admin").permitAll()
 				.antMatchers("/cms/**").hasRole("ADMIN")
 				.antMatchers("**").permitAll()
 			.and()
