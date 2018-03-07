@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,11 +56,11 @@ public class Admin {
 	
 	private Date updateDate;
 	
-	@ManyToMany
+	@ManyToMany(cascade={CascadeType.ALL})
 	@JoinTable(
 		name="tb_admin_authority",
-		joinColumns={@JoinColumn(name="id")},
-		inverseJoinColumns={@JoinColumn(name="authority")}
+		joinColumns=@JoinColumn(name="id"),
+		inverseJoinColumns=@JoinColumn(name="authority")
 	)
 	private Set<Authority> authorities = new HashSet<>();
 	
