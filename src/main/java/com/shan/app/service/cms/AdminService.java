@@ -1,8 +1,9 @@
 package com.shan.app.service.cms;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -50,13 +51,13 @@ public class AdminService {
 		
 		Set<Authority> set = new HashSet<>();
 		Set<String> authorities = adminDTO.getAuthorities();
-		authorities.forEach(auth -> {
+		for(String auth : authorities) {
 			Authority authority = authorityRepository.findOne(auth);
 			if(authority == null) {
 				throw new EntityNotFoundException(Authority.class, "authority", auth);
 			}
 			set.add(authority);
-		});
+		}
 		admin.setAuthorities(set);
 		
 		return adminRepository.save(admin);

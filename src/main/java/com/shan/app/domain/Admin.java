@@ -61,6 +61,6 @@ public class Admin {
 		joinColumns={@JoinColumn(name="id")},
 		inverseJoinColumns={@JoinColumn(name="authority")}
 	)
-	private Set<Authority> authorities = new HashSet<>(); 
+	private Set<Authority> authorities = new HashSet<>();
 	
 }

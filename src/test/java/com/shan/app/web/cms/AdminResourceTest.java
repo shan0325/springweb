@@ -46,12 +46,11 @@ public class AdminResourceTest {
 	@Test
 	public void create() throws Exception {
 		AdminDTO.Create admin = new AdminDTO.Create();
-		admin.setUserId("admin");
+		admin.setUserId("test");
 		admin.setPassword("1234");
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ADMIN");
 		admin.setAuthorities(authorities);
-		
 		
 		ResultActions result = mockMvc.perform(post("/cms/admin")
 										.contentType(MediaType.APPLICATION_JSON)
@@ -66,6 +65,9 @@ public class AdminResourceTest {
 		AdminDTO.Create admin = new AdminDTO.Create();
 		admin.setUserId("admin");
 		admin.setPassword("1234");
+		Set<String> authorities = new HashSet<>();
+		authorities.add("ADMIN");
+		admin.setAuthorities(authorities);
 		
 		ResultActions result = mockMvc.perform(post("/cms/admin")
 										.contentType(MediaType.APPLICATION_JSON)
@@ -97,6 +99,7 @@ public class AdminResourceTest {
 		result.andDo(print());
 		result.andExpect(status().isBadRequest());
 	}
+	
 	
 	
 }

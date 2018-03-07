@@ -29,6 +29,7 @@ public class AdminDTO {
 		private Date passwordUpdateDate;
 		private Date regDate;
 		private Date updateDate;
+		private Set<Authority> authorities;
 	}
 	
 	@Data
