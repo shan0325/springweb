@@ -21,6 +21,7 @@ public class AdminDTO {
 	public static class Admin {
 		private Long id;
 		private String userId;
+		private String name;
 		private String email;
 		private String hp;
 		private String tel;
@@ -34,15 +35,18 @@ public class AdminDTO {
 	
 	@Data
 	public static class Create {
-		@NotBlank(message="아이디를 입력해주세요.")
-		@Size(min=1, max=50)
+		@NotBlank(message = "아이디를 입력해주세요.")
+		@Size(min = 1, max = 50)
 		private String userId;
-		@NotBlank(message="비밀번호를 입력해주세요.")
+		@NotBlank(message = "비밀번호를 입력해주세요.")
 		private String password;
+		@NotBlank(message = "이름을 입력해주세요.")
+		@Size(min = 1, max = 50)
+		private String name;
 		private String email;
 		private String hp;
 		private String tel;
-		@NotNull(message="권한을 입력해주세요.")
+		@NotNull(message = "권한을 입력해주세요.")
 		private Set<String> authorities;
 	}
 

@@ -36,13 +36,14 @@ public class AdminService {
 
 	public Admin createAdmin(AdminDTO.Create adminDTO) {
 		
-		Admin adminDetail = adminRepository.findByUserId(adminDTO.getUserId());
+		Admin adminDetail = adminRepository.findOneByUserId(adminDTO.getUserId());
 		if(adminDetail != null) {
 			throw new AdminDuplicatedException("Already used userId");
 		}
 		
 		Admin admin = new Admin();
 		admin.setUserId(adminDTO.getUserId());
+		admin.setName(adminDTO.getName());
 		admin.setEmail(adminDTO.getEmail());
 		admin.setHp(adminDTO.getHp());
 		admin.setTel(adminDTO.getTel());
@@ -52,7 +53,7 @@ public class AdminService {
 		Set<Authority> set = new HashSet<>();
 		Set<String> authorities = adminDTO.getAuthorities();
 		for(String auth : authorities) {
-			Authority authority = authorityRepository.findOne(auth);
+			Authority authority = authorityRepository.findOneByAuthority(auth);
 			if(authority == null) {
 				throw new EntityNotFoundException(Authority.class, "authority", auth);
 			}

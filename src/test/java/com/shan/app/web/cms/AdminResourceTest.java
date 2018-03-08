@@ -48,6 +48,7 @@ public class AdminResourceTest {
 		AdminDTO.Create admin = new AdminDTO.Create();
 		admin.setUserId("test");
 		admin.setPassword("1234");
+		admin.setName("테스트");
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ADMIN");
 		admin.setAuthorities(authorities);

@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -29,15 +30,20 @@ public class Admin {
 	private Long id;
 	
 	@NotBlank
-	@Size(min=1, max=50)
-	@Column(name="user_id", length=50, unique=true, nullable=false)
+	@Size(min = 1, max = 50)
+	@Column(name = "user_id", length = 50, unique = true, nullable = false)
 	private String userId;
 
 	@NotBlank
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String password;
 	
 	private String salt;
+	
+	@NotBlank
+	@Size(min = 1, max = 50)
+	@Column(length = 100, nullable = false)
+	private String name;
 	
 	private String email;
 	
@@ -45,23 +51,26 @@ public class Admin {
 	
 	private String tel;
 	
+	@Column(name = "reg_user_id")
 	private String regUserId;
 	
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String state = "N";
 	
+	@Column(name = "password_update_date")
 	private Date passwordUpdateDate;
 	
+	@Column(name = "reg_date")
 	private Date regDate;
 	
+	@Column(name = "update_date")
 	private Date updateDate;
 	
-	@ManyToMany(cascade={CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
-		name="tb_admin_authority",
-		joinColumns=@JoinColumn(name="id"),
-		inverseJoinColumns=@JoinColumn(name="authority")
-	)
+		name = "tb_admin_authority",
+		joinColumns = @JoinColumn(name = "admin_id"),
+		inverseJoinColumns = @JoinColumn(name = "authority_id"))
 	private Set<Authority> authorities = new HashSet<>();
 	
 }

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.shan.app.domain.Authority;
 
 @Repository("cmsAuthorityRepository")
-public interface AuthorityRepository extends JpaRepository<Authority, String> {
+public interface AuthorityRepository extends JpaRepository<Authority, Long> {
+
+	Authority findOneByAuthority(String auth);
 
 }
