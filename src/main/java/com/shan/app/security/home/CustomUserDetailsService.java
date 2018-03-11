@@ -1,4 +1,4 @@
-package com.shan.app.security.cms;
+package com.shan.app.security.home;
 
 import java.util.Optional;
 
@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 
 import com.shan.app.domain.Admin;
 import com.shan.app.repository.cms.AdminRepository;
+import com.shan.app.security.cms.AdminNotActivatedException;
+import com.shan.app.security.cms.SecurityAdminUser;
 import com.shan.app.web.errors.EntityNotFoundException;
 
-@Service
-public class CustomUserDetailService implements UserDetailsService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailService.class);
+@Service("homeCustomUserDetailsService")
+public class CustomUserDetailsService implements UserDetailsService {
+
+	private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
 	@Resource(name="cmsAdminRepository")
 	private AdminRepository adminRepository;

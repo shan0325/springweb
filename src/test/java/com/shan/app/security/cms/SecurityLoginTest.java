@@ -1,12 +1,16 @@
 package com.shan.app.security.cms;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.isNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.security.Principal;
 import java.util.Enumeration;
 
 import org.junit.Before;
@@ -15,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,7 +49,7 @@ public class SecurityLoginTest {
 										.addFilter(springSecurityFilterChain)
 										.build();
 		
-		this.session = (MockHttpSession) mockMvc.perform(formLogin("/cms/login")
+		this.session = (MockHttpSession) mockMvc.perform(formLogin("/home/login")
 													.user("userId", "admin")
 													.password("password", "1234"))
 												.andExpect(status().is3xxRedirection())
@@ -60,8 +65,13 @@ public class SecurityLoginTest {
 			System.out.println("enums.nextElement() = " + enums.nextElement());
 		}
 		
-		session.getAttribute("SPRING_SECURITY_CONTEXT");
-		System.out.println("principal = " + session.getAttribute("SPRING_SECURITY_CONTEXT"));
+		SecurityContext securityContext = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+		SecurityAdminUser securityAdminUser = (SecurityAdminUser) securityContext.getAuthentication().getPrincipal();
+		
+		System.out.println("principal = " + securityAdminUser);
+		
+		assertThat(securityAdminUser, is(notNullValue()));
+		assertThat(securityAdminUser.getUsername(), is("admin"));
 	}
 	
 	@Test

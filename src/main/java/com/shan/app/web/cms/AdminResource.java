@@ -18,7 +18,7 @@ import com.shan.app.domain.Admin;
 import com.shan.app.service.cms.AdminService;
 import com.shan.app.service.cms.dto.AdminDTO;
 
-@RestController
+@RestController("cmsAdminResource")
 @RequestMapping("/cms")
 public class AdminResource {
 	

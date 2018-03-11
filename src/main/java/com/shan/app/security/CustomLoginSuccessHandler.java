@@ -1,4 +1,4 @@
-package com.shan.app.security.cms;
+package com.shan.app.security;
 
 import java.io.IOException;
 
