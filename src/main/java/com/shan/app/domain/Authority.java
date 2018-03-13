@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="tb_authority")
+@Table(name = "tb_authority")
 public class Authority {
 	
 	@Id

@@ -1,5 +1,7 @@
 package com.shan.app.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ResourceServerConfig.class);
 
 	@Value("${resource.id:spring-boot-application}")
 	private String resourceId;
@@ -30,9 +34,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {		
+		logger.info("publicKey : " + publicKey);
+		
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		//converter.setSigningKey("secret");
-		System.out.println("publicKey = " + publicKey);
 		converter.setVerifierKey(publicKey);
 		return converter;
 	}

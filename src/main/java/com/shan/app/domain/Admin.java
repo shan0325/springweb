@@ -22,7 +22,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="tb_admin")
+@Table(name = "tb_admin")
 public class Admin {
 
 	@Id
