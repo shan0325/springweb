@@ -3,14 +3,12 @@ package com.shan.app.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_oauth_client_details")
 public class OauthClientDetails {
 	
 	@Id
-	@Column(name = "client_id", nullable = false)
+	@Column(name = "client_id")
 	private String clientId;
 	
 	@Column(name = "resource_ids")

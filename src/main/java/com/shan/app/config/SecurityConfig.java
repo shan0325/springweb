@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -40,6 +41,8 @@ public class SecurityConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
+			http.csrf().disable();
+			
 			http.antMatcher("/cms/**")
 					.authorizeRequests()
 						.antMatchers("/cms/login").permitAll()
@@ -85,9 +88,12 @@ public class SecurityConfig {
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests()
-					.antMatchers("/home/login").permitAll()
-					.antMatchers("/home/**").authenticated()
+			http.csrf().disable();
+			
+			http.antMatcher("/home/**")
+					.authorizeRequests()
+						.antMatchers("/home/login").permitAll()
+						.antMatchers("/home/**").authenticated()
 				.and()
 				.formLogin()
 					.loginPage("/home/login")
@@ -99,6 +105,30 @@ public class SecurityConfig {
 				.and()
 				.logout();
 		}
+	}
+	
+	@Configuration
+	@Order(3)
+	public static class App3ConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+		@Resource(name="cmsCustomUserDetailsService")
+		private CustomUserDetailsService customUserDetailsService;
+		
+		@Autowired
+		private PasswordEncoder passwordEncoder;
+		
+		@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth.authenticationProvider(authenticationProvider());
+		}
+		
+		@Bean
+	    public DaoAuthenticationProvider authenticationProvider() {
+	        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+	        authenticationProvider.setUserDetailsService(customUserDetailsService);
+	        authenticationProvider.setPasswordEncoder(passwordEncoder);
+	        return authenticationProvider;
+	    }
 	}
 	
 }
