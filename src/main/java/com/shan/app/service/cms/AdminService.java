@@ -1,14 +1,15 @@
 package com.shan.app.service.cms;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import com.shan.app.domain.Admin;
 import com.shan.app.domain.Authority;
 import com.shan.app.repository.cms.AdminRepository;
 import com.shan.app.repository.cms.AuthorityRepository;
+import com.shan.app.security.cms.SecurityAdminUser;
 import com.shan.app.service.cms.dto.AdminDTO;
 import com.shan.app.web.errors.AdminDuplicatedException;
 import com.shan.app.web.errors.EntityNotFoundException;
@@ -60,6 +62,11 @@ public class AdminService {
 			set.add(authority);
 		}
 		admin.setAuthorities(set);
+
+		//시큐리티 세션 가져오기
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); 
+		SecurityAdminUser user = (SecurityAdminUser) authentication.getPrincipal();
+		admin.setUserId(user.getUsername());
 		
 		return adminRepository.save(admin);
 	}

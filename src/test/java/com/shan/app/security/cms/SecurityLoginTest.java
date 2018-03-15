@@ -49,7 +49,7 @@ public class SecurityLoginTest {
 										.addFilter(springSecurityFilterChain)
 										.build();
 		
-		this.session = (MockHttpSession) mockMvc.perform(formLogin("/home/login")
+		this.session = (MockHttpSession) mockMvc.perform(formLogin("/cms/login")
 													.user("userId", "admin")
 													.password("password", "1234"))
 												.andExpect(status().is3xxRedirection())

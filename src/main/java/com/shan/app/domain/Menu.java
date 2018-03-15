@@ -6,7 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 
@@ -24,9 +28,9 @@ public class Menu {
 	
 	@Column(name = "top_id", nullable = false)
 	private Long topId;
-	
-	@Column(name = "group_id", nullable = false)
-	private Long groupId;
+
+	@Column(nullable = false)
+	private Integer depth;
 	
 	@Column(length = 100, nullable = false)
 	private String name;
@@ -59,4 +63,8 @@ public class Menu {
 	
 	@Column(name = "update_date")
 	private Date updateDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "board_manager_id", nullable = false)
+	private BoardManager boardManagerId;
 }
