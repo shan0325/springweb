@@ -2,8 +2,7 @@ package com.shan.app.web.errors;
 
 public class AdminDuplicatedException extends RuntimeException {
 	
-	public AdminDuplicatedException() {
-	}
+	public AdminDuplicatedException() { }
 
 	public AdminDuplicatedException(String message) {
 		super(message);

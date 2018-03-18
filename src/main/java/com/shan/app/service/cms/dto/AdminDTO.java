@@ -49,5 +49,23 @@ public class AdminDTO {
 		@NotNull(message = "권한을 입력해주세요.")
 		private Set<String> authorities;
 	}
+	
+	@Data
+	public static class Update {
+		@NotBlank(message = "비밀번호를 입력해주세요.")
+		private String password;
+		@NotBlank(message = "비밀번호 확인을 입력해주세요.")
+		private String passwordConfirm;
+		@NotBlank(message = "이름을 입력해주세요.")
+		@Size(min = 1, max = 50)
+		private String name;
+		private String email;
+		private String hp;
+		private String tel;
+		@NotBlank(message = "상태를 입력해주세요.")
+		private String state;
+		@NotNull(message = "권한을 입력해주세요.")
+		private Set<String> authorities;
+	}
 
 }

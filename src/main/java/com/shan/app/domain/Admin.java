@@ -73,4 +73,8 @@ public class Admin {
 		inverseJoinColumns = @JoinColumn(name = "authority_id"))
 	private Set<Authority> authorities = new HashSet<>();
 	
+	public void addAuthority(Authority authority) {
+		this.authorities.add(authority);
+	}
+	
 }

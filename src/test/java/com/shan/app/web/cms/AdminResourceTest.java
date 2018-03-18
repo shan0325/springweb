@@ -2,6 +2,7 @@ package com.shan.app.web.cms;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -83,11 +84,13 @@ public class AdminResourceTest {
 		AdminDTO.Create admin = new AdminDTO.Create();
 		admin.setUserId("admin");
 		admin.setPassword("1234");
+		admin.setName("관리자");
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ADMIN");
 		admin.setAuthorities(authorities);
 		
 		ResultActions result = mockMvc.perform(post("/cms/admin")
+										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
 		
@@ -101,6 +104,7 @@ public class AdminResourceTest {
 		admin.setUserId("admin");
 		
 		ResultActions result = mockMvc.perform(post("/cms/admin")
+										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
 		
@@ -111,6 +115,7 @@ public class AdminResourceTest {
 	@Test
 	public void createHttpMessageNotReadableTest() throws Exception {
 		ResultActions result = mockMvc.perform(post("/cms/admin")
+										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(Arrays.asList("admin"))));
 		
@@ -118,6 +123,41 @@ public class AdminResourceTest {
 		result.andExpect(status().isBadRequest());
 	}
 	
+	@Test
+	public void update() throws Exception {
+		AdminDTO.Update admin = new AdminDTO.Update();
+		admin.setPassword("1234");
+		admin.setPasswordConfirm("1234");
+		admin.setName("담당자");
+		admin.setEmail("manager@naver.com");
+		admin.setHp("01012345678");
+		admin.setState("Y");
+		Set<String> authorities = new HashSet<>();
+		authorities.add("MANAGER");
+		admin.setAuthorities(authorities);
+		
+		ResultActions result = mockMvc.perform(put("/cms/admin/22")
+										.session(session)
+										.contentType(MediaType.APPLICATION_JSON)
+										.content(objectMapper.writeValueAsString(admin)));
+		
+		result.andDo(print());
+		result.andExpect(status().isOk());
+	}
 	
+	@Test
+	public void updateValidationTest() throws Exception {
+		AdminDTO.Update admin = new AdminDTO.Update();
+		admin.setPassword("1234");
+		admin.setPasswordConfirm("1234");
+		
+		ResultActions result = mockMvc.perform(put("/cms/admin/22")
+										.session(session)
+										.contentType(MediaType.APPLICATION_JSON)
+										.content(objectMapper.writeValueAsString(admin)));
+		
+		result.andDo(print());
+		result.andExpect(status().isBadRequest());
+	}
 	
 }

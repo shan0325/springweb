@@ -1,8 +1,11 @@
 package com.shan.app.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +39,7 @@ public class Authority {
 	@Column(name = "authority_name", nullable = false, length = 200)
 	private String authorityName;
 	
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "authorities")
+//	@ManyToMany(mappedBy = "authorities")
 //	private Set<Admin> admins = new HashSet<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)

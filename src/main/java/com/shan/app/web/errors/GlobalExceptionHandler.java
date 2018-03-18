@@ -195,6 +195,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(apiError);
 	}
 	
+	@ExceptionHandler(PasswordConfirmException.class)
+	public ResponseEntity<Object> handlePasswordConfirmException(PasswordConfirmException ex) {
+		String message = "비밀번호와 비밀번호확인이 일치하지않습니다.";
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
+	}
+	
 	private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
 		return new ResponseEntity<>(apiError, apiError.getStatus());
 	}
