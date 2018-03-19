@@ -14,6 +14,8 @@ jdbc.connection : Logs connection open and close events
     </encoder>
   </appender>
   
+  <logger name="com.shan.app" level="DEBUG" />
+  
   <logger name="jdbc" level="OFF"/>
   
   <logger name="jdbc.sqlonly" level="DEBUG" additivity="false">

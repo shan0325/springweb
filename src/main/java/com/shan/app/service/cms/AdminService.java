@@ -2,13 +2,14 @@ package com.shan.app.service.cms;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +38,9 @@ public class AdminService {
 	
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public Admin createAdmin(AdminDTO.Create adminDTO) {
 		
@@ -100,8 +104,8 @@ public class AdminService {
 		return adminRepository.save(admin);
 	}
 
-	public List<Admin> getAdmins() {
-		return adminRepository.findAll();
+	public Page<AdminDTO.Admin> getAdmins(Pageable pageable) {
+		return adminRepository.findAll(pageable).map(admin -> modelMapper.map(admin, AdminDTO.Admin.class));
 	}
 
 	public Admin getAdmin(Long id) {

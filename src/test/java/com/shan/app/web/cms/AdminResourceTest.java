@@ -1,9 +1,12 @@
 package com.shan.app.web.cms;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
@@ -158,6 +161,17 @@ public class AdminResourceTest {
 		
 		result.andDo(print());
 		result.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void getAdminsTest() throws Exception {
+		ResultActions result = mockMvc.perform(get("/cms/admins")
+										.param("page", "0")
+										.session(session));
+		
+		result.andDo(print());
+		result.andExpect(status().isOk());
+		result.andExpect(jsonPath("$.content[0].userId", is("admin")));
 	}
 	
 }
