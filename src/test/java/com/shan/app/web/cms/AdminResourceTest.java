@@ -2,6 +2,7 @@ package com.shan.app.web.cms;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -167,11 +168,31 @@ public class AdminResourceTest {
 	public void getAdminsTest() throws Exception {
 		ResultActions result = mockMvc.perform(get("/cms/admins")
 										.param("page", "0")
+										.param("size", "1")
+										.param("sort", "id,desc")
 										.session(session));
 		
 		result.andDo(print());
 		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.content[0].userId", is("admin")));
+		result.andExpect(jsonPath("$.content[0].userId", is("manager")));
+	}
+	
+	@Test
+	public void getAdminTest() throws Exception {
+		ResultActions result = mockMvc.perform(get("/cms/admin/1")
+										.session(session));
+		
+		result.andDo(print());
+		result.andExpect(status().isOk());
+		result.andExpect(jsonPath("$.userId", is("admin")));
+	}
+	
+	@Test
+	public void deleteAdminTest() throws Exception {
+		ResultActions result = mockMvc.perform(delete("/cms/admin/22")
+										.session(session));
+		result.andDo(print());
+		result.andExpect(status().isOk());
 	}
 	
 }
