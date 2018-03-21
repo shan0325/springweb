@@ -65,7 +65,7 @@ public class AdminResourceTest {
 	}
 
 	@Test
-	public void create() throws Exception {
+	public void createTest() throws Exception {
 		AdminDTO.Create admin = new AdminDTO.Create();
 		admin.setUserId("test");
 		admin.setPassword("1234");
@@ -128,7 +128,7 @@ public class AdminResourceTest {
 	}
 	
 	@Test
-	public void update() throws Exception {
+	public void updateTest() throws Exception {
 		AdminDTO.Update admin = new AdminDTO.Update();
 		admin.setPassword("1234");
 		admin.setPasswordConfirm("1234");
@@ -140,7 +140,7 @@ public class AdminResourceTest {
 		authorities.add("MANAGER");
 		admin.setAuthorities(authorities);
 		
-		ResultActions result = mockMvc.perform(put("/cms/admin/22")
+		ResultActions result = mockMvc.perform(put("/cms/admin/1")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
@@ -155,7 +155,7 @@ public class AdminResourceTest {
 		admin.setPassword("1234");
 		admin.setPasswordConfirm("1234");
 		
-		ResultActions result = mockMvc.perform(put("/cms/admin/22")
+		ResultActions result = mockMvc.perform(put("/cms/admin/1")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
@@ -189,7 +189,7 @@ public class AdminResourceTest {
 	
 	@Test
 	public void deleteAdminTest() throws Exception {
-		ResultActions result = mockMvc.perform(delete("/cms/admin/22")
+		ResultActions result = mockMvc.perform(delete("/cms/admin/1")
 										.session(session));
 		result.andDo(print());
 		result.andExpect(status().isOk());
