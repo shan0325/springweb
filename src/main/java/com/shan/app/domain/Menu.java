@@ -64,5 +64,5 @@ public class Menu {
 	
 	@ManyToOne
 	@JoinColumn(name = "board_manager_id", nullable = false)
-	private BoardManager boardManagerId;
+	private BoardManager boardManager;
 }

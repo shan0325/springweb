@@ -93,9 +93,9 @@ public class BoardManager {
 	@Column(name = "update_date")
 	private Date updateDate;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "boardManagerId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "boardManager")
 	private List<Board> boards;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "boardManagerId")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "boardManager")
 	private List<Menu> menus;
 }

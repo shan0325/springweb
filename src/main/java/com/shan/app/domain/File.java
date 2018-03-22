@@ -43,5 +43,5 @@ public class File {
 	
 	@ManyToOne
 	@JoinColumn(name = "board_id", nullable = false)
-	private Board boardId;
+	private Board board;
 }

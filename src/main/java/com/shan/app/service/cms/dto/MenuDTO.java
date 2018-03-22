@@ -4,8 +4,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.shan.app.domain.BoardManager;
-
 import lombok.Data;
 
 public class MenuDTO {
@@ -27,7 +25,7 @@ public class MenuDTO {
 		private String urlTarget;
 		@NotBlank(message = "메뉴 순서를 입력해주세요.")
 		private Integer ord;
-		private BoardManager boardManagerId;
+		private Long boardManagerId;
 	}
 
 }
