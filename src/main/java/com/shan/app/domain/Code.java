@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,12 +16,15 @@ import lombok.Data;
 @Entity
 @Table(name = "tb_code")
 public class Code {
-
+	
 	@Id
-	@Column(length = 20)
+	@GeneratedValue
+	private Long id;
+
+	@Column(length = 20, nullable = false)
 	private String code;
 	
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String codeName;
 	
 	@Column(length = 1, nullable = false)
@@ -36,6 +40,6 @@ public class Code {
 	private Date updateDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "group_code", nullable = false)
+	@JoinColumn(name = "group_code_id", nullable = false)
 	private GroupCode groupCode;
 }

@@ -23,7 +23,7 @@ import com.shan.app.repository.cms.AuthorityRepository;
 import com.shan.app.security.cms.SecurityAdminUser;
 import com.shan.app.service.cms.dto.AdminDTO;
 import com.shan.app.service.cms.dto.AdminDTO.Update;
-import com.shan.app.web.errors.AdminDuplicatedException;
+import com.shan.app.web.errors.EntityDuplicatedException;
 import com.shan.app.web.errors.EntityNotFoundException;
 
 @Service("cmsAdminService")
@@ -46,7 +46,8 @@ public class AdminService {
 		
 		Admin adminDetail = adminRepository.findOneByUserId(adminDTO.getUserId());
 		if(adminDetail != null) {
-			throw new AdminDuplicatedException("Already used userId");
+			//throw new AdminDuplicatedException("Already used userId");
+			throw new EntityDuplicatedException(Admin.class, "userId", adminDTO.getUserId());
 		}
 		
 		Admin admin = new Admin();

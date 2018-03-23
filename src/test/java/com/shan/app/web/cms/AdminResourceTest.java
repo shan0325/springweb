@@ -74,7 +74,7 @@ public class AdminResourceTest {
 		authorities.add("ADMIN");
 		admin.setAuthorities(authorities);
 		
-		ResultActions result = mockMvc.perform(post("/cms/admin")
+		ResultActions result = mockMvc.perform(post("/cms/1/admin")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
@@ -93,7 +93,7 @@ public class AdminResourceTest {
 		authorities.add("ADMIN");
 		admin.setAuthorities(authorities);
 		
-		ResultActions result = mockMvc.perform(post("/cms/admin")
+		ResultActions result = mockMvc.perform(post("/cms/1/admin")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
@@ -107,7 +107,7 @@ public class AdminResourceTest {
 		AdminDTO.Create admin = new AdminDTO.Create();
 		admin.setUserId("admin");
 		
-		ResultActions result = mockMvc.perform(post("/cms/admin")
+		ResultActions result = mockMvc.perform(post("/cms/1/admin")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
@@ -118,7 +118,7 @@ public class AdminResourceTest {
 	
 	@Test
 	public void createHttpMessageNotReadableTest() throws Exception {
-		ResultActions result = mockMvc.perform(post("/cms/admin")
+		ResultActions result = mockMvc.perform(post("/cms/1/admin")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(Arrays.asList("admin"))));
@@ -140,7 +140,7 @@ public class AdminResourceTest {
 		authorities.add("MANAGER");
 		admin.setAuthorities(authorities);
 		
-		ResultActions result = mockMvc.perform(put("/cms/admin/1")
+		ResultActions result = mockMvc.perform(put("/cms/1/admin/1")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
@@ -155,7 +155,7 @@ public class AdminResourceTest {
 		admin.setPassword("1234");
 		admin.setPasswordConfirm("1234");
 		
-		ResultActions result = mockMvc.perform(put("/cms/admin/1")
+		ResultActions result = mockMvc.perform(put("/cms/1/admin/1")
 										.session(session)
 										.contentType(MediaType.APPLICATION_JSON)
 										.content(objectMapper.writeValueAsString(admin)));
@@ -165,8 +165,30 @@ public class AdminResourceTest {
 	}
 	
 	@Test
+	public void updateEntityNotFoundExceptionTest() throws Exception {
+		AdminDTO.Update admin = new AdminDTO.Update();
+		admin.setPassword("1234");
+		admin.setPasswordConfirm("1234");
+		admin.setName("담당자");
+		admin.setEmail("manager@naver.com");
+		admin.setHp("01012345678");
+		admin.setState("Y");
+		Set<String> authorities = new HashSet<>();
+		authorities.add("MANAGER");
+		admin.setAuthorities(authorities);
+		
+		ResultActions result = mockMvc.perform(put("/cms/1/admin/0")
+										.session(session)
+										.contentType(MediaType.APPLICATION_JSON)
+										.content(objectMapper.writeValueAsString(admin)));
+		
+		result.andDo(print());
+		result.andExpect(status().isNotFound());
+	}
+	
+	@Test
 	public void getAdminsTest() throws Exception {
-		ResultActions result = mockMvc.perform(get("/cms/admins")
+		ResultActions result = mockMvc.perform(get("/cms/1/admins")
 										.param("page", "0")
 										.param("size", "1")
 										.param("sort", "id,desc")
@@ -179,7 +201,7 @@ public class AdminResourceTest {
 	
 	@Test
 	public void getAdminTest() throws Exception {
-		ResultActions result = mockMvc.perform(get("/cms/admin/1")
+		ResultActions result = mockMvc.perform(get("/cms/1/admin/1")
 										.session(session));
 		
 		result.andDo(print());
@@ -189,7 +211,7 @@ public class AdminResourceTest {
 	
 	@Test
 	public void deleteAdminTest() throws Exception {
-		ResultActions result = mockMvc.perform(delete("/cms/admin/1")
+		ResultActions result = mockMvc.perform(delete("/cms/1/admin/1")
 										.session(session));
 		result.andDo(print());
 		result.andExpect(status().isOk());

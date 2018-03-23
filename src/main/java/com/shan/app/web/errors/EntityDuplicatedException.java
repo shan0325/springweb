@@ -6,14 +6,14 @@ import java.util.stream.IntStream;
 
 import org.thymeleaf.util.StringUtils;
 
-public class EntityNotFoundException extends RuntimeException {
+public class EntityDuplicatedException extends RuntimeException {
 
-	public EntityNotFoundException(Class clazz, String... searchParamsMap) {
-        super(EntityNotFoundException.generateMessage(clazz.getSimpleName(), toMap(String.class, String.class, searchParamsMap)));
+	public EntityDuplicatedException(Class clazz, String... searchParamsMap) {
+        super(EntityDuplicatedException.generateMessage(clazz.getSimpleName(), toMap(String.class, String.class, searchParamsMap)));
     }
 	
 	private static String generateMessage(String entity, Map<String, String> searchParams) {
-        return StringUtils.capitalize(entity) + " was not found for parameters " + searchParams;
+        return StringUtils.capitalize(entity) + " duplicated for parameters " + searchParams;
     }
 
     private static <K, V> Map<K, V> toMap(Class<K> keyType, Class<V> valueType, Object... entries) {

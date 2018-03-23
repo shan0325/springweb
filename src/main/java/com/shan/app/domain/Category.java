@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,12 +16,15 @@ import lombok.Data;
 @Entity
 @Table(name = "tb_category")
 public class Category {
-
+	
 	@Id
-	@Column(length = 20)
+	@GeneratedValue
+	private Long id;
+
+	@Column(length = 20, nullable = false)
 	private String category;
 	
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String categoryName;
 	
 	@Column(length = 1, nullable = false)
@@ -36,6 +40,6 @@ public class Category {
 	private Date updateDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "group_category", nullable = false)
+	@JoinColumn(name = "group_category_id", nullable = false)
 	private GroupCategory groupCategory;
 }

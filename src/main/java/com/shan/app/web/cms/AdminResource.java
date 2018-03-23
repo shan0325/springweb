@@ -26,7 +26,7 @@ import com.shan.app.service.cms.dto.AdminDTO;
 import com.shan.app.web.errors.PasswordConfirmException;
 
 @RestController("cmsAdminResource")
-@RequestMapping("/cms")
+@RequestMapping("/cms/{menuId}")
 public class AdminResource {
 	
 	public static final Logger logger = LoggerFactory.getLogger(AdminResource.class);

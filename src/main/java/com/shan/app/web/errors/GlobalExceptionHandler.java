@@ -186,6 +186,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setDebugMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
+    
+    @ExceptionHandler(EntityDuplicatedException.class)
+    protected ResponseEntity<Object> handleEntityDuplicatedException(EntityDuplicatedException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 	
 	@ExceptionHandler(AdminDuplicatedException.class)
 	public ResponseEntity<Object> handleAdminDuplicatedException(AdminDuplicatedException ex) {

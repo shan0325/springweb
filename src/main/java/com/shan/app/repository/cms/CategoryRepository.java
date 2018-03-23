@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.shan.app.domain.Category;
 
 @Repository("cmsCategoryRepository")
-public interface CategoryRepository extends JpaRepository<Category, String> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 }

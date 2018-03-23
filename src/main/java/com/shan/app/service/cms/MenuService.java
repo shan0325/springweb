@@ -28,6 +28,7 @@ public class MenuService {
 		menu.setName(create.getName());
 		menu.setDescription(create.getDescription());
 		menu.setUseYn(create.getUseYn());
+		menu.setMenuGubun(create.getMenuGubun());
 		menu.setMenuType(create.getMenuType());
 		menu.setUrl(create.getUrl());
 		menu.setUrlTarget(create.getUrlTarget());

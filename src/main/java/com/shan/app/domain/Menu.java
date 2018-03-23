@@ -41,16 +41,16 @@ public class Menu {
 	@Column(name = "use_yn", length = 1, nullable = false)
 	private String useYn;
 	
-	@Column(name = "menu_type", nullable = false)
-	private String menuType;
+	@Column(name = "menu_gubun", length = 50, nullable = false)
+	private String menuGubun;
 	
-	@Column(name = "url_type", nullable = false)
-	private String urlType;	//local(/menu/..), external(http://..)
+	@Column(name = "menu_type", length = 50, nullable = false)
+	private String menuType;
 	
 	@Column(nullable = false)
 	private String url;
 	
-	@Column(name = "url_target", nullable = false)
+	@Column(name = "url_target", length = 50, nullable = false)
 	private String urlTarget;
 	
 	@Column(nullable = false)
@@ -63,6 +63,6 @@ public class Menu {
 	private Date updateDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "board_manager_id", nullable = false)
+	@JoinColumn(name = "board_manager_id")
 	private BoardManager boardManager;
 }

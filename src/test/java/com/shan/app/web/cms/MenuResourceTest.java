@@ -5,7 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import javax.transaction.Transactional;
+import javax.servlet.Filter;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -22,12 +21,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shan.app.service.cms.dto.GroupCodeDTO;
+import com.shan.app.service.cms.dto.MenuDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
-public class GroupCodeResourceTest {
+public class MenuResourceTest {
 
 	@Autowired
 	private WebApplicationContext wac;
@@ -35,7 +33,7 @@ public class GroupCodeResourceTest {
 	private MockMvc mockMvc;
 	
 	@Autowired
-	private FilterChainProxy springSecurityFilterChain;
+	private Filter springSecurityFilterChain;
 	
 	private MockHttpSession session;
 	
@@ -57,19 +55,22 @@ public class GroupCodeResourceTest {
 	
 	@Test
 	public void createTest() throws Exception {
-		GroupCodeDTO.Create create = new GroupCodeDTO.Create();
-		create.setGroupCode("MENUTYPE");
-		create.setGroupCodeName("메뉴타입");
-		create.setUseYn("Y");
+		//url 규칙
+		//   /cms/{메뉴번호}/admin
 		
-		ResultActions result = mockMvc.perform(post("/cms/1/group-code")
-										.session(session)
-										.contentType(MediaType.APPLICATION_JSON)
-										.content(objectMapper.writeValueAsString(create)));
+		MenuDTO.Create create = new MenuDTO.Create();
+		create.setName("시스템관리");
+		create.setUseYn("Y");
+		create.setMenuGubun("CMS");
+		create.setMenuType("LIST");
+		create.setOrd(1);
+		
+		ResultActions result = mockMvc.perform(post("/cms/1/menu")
+												.session(session)
+												.contentType(MediaType.APPLICATION_JSON)
+												.content(objectMapper.writeValueAsString(create)));
 		
 		result.andDo(print());
 		result.andExpect(status().isCreated());
 	}
-	
-	
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.shan.app.domain.Code;
 
 @Repository("cmsCodeRepository")
-public interface CodeRepository extends JpaRepository<Code, String> {
+public interface CodeRepository extends JpaRepository<Code, Long> {
 
 }
