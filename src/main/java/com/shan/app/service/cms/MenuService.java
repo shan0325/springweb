@@ -1,10 +1,15 @@
 package com.shan.app.service.cms;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.shan.app.domain.BoardManager;
 import com.shan.app.domain.Menu;
@@ -30,8 +35,10 @@ public class MenuService {
 		menu.setUseYn(create.getUseYn());
 		menu.setMenuGubun(create.getMenuGubun());
 		menu.setMenuType(create.getMenuType());
-		menu.setUrl(create.getUrl());
-		menu.setUrlTarget(create.getUrlTarget());
+		menu.setCmsUrl(create.getCmsUrl());
+		menu.setCmsUrlTarget(create.getCmsUrlTarget());
+		menu.setHomeUrl(create.getHomeUrl());
+		menu.setHomeUrlTarget(create.getHomeUrlTarget());
 		menu.setOrd(create.getOrd());
 		menu.setRegDate(new Date());
 		
@@ -46,25 +53,53 @@ public class MenuService {
 		}
 		
 		//부모메뉴가 없으면 최상위메뉴로 있으면 하위메뉴로 등록
-		Menu ParentMenu = menuRepository.findOne(create.getParentId());
-		if(ParentMenu == null) {
+		Menu newMenu;
+		if(create.getParentId() == null) {
 			//최상위메뉴 등록
 			menu.setParentId(0L);
 			menu.setTopId(0L);
 			menu.setDepth(0);
 			
-			Menu newMenu = menuRepository.save(menu);
+			newMenu = menuRepository.save(menu);
 			newMenu.setTopId(newMenu.getId());
-			return menuRepository.save(newMenu);
-		} 
-		else {
+		} else {
 			//하위메뉴 등록
+			Menu ParentMenu = menuRepository.findOne(create.getParentId());
 			menu.setParentId(ParentMenu.getId());
 			menu.setTopId(ParentMenu.getTopId());
 			menu.setDepth(ParentMenu.getDepth() + 1);
 			
-			return menuRepository.save(menu);
+			newMenu = menuRepository.save(menu);
 		}
+		
+		if(!StringUtils.isEmpty(menu.getCmsUrl())) {
+			newMenu.setCmsUrl(menu.getCmsUrl().replace("{menuId}", String.valueOf(newMenu.getId())));
+		}
+		if(!StringUtils.isEmpty(menu.getHomeUrl())) {
+			newMenu.setHomeUrl(menu.getHomeUrl().replace("{menuId}", String.valueOf(newMenu.getId())));
+		}
+		
+		newMenu = menuRepository.save(newMenu);
+		
+		//이미지 파일이 존재하면 업로드
+		String path = "/upload/menuImage";
+		MultipartFile file = create.getImage();
+		if(!file.isEmpty()) {
+			File destPath = new File(path);
+			if(!destPath.exists()) {
+				destPath.mkdirs();
+			}
+			
+			File newFile = new File(path + File.separator + UUID.randomUUID() + ".txt");
+			try {
+				file.transferTo(newFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return newMenu;
+		
 	}
 
 }

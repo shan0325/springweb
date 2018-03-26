@@ -47,11 +47,15 @@ public class Menu {
 	@Column(name = "menu_type", length = 50, nullable = false)
 	private String menuType;
 	
-	@Column(nullable = false)
-	private String url;
+	private String cmsUrl;
 	
-	@Column(name = "url_target", length = 50, nullable = false)
-	private String urlTarget;
+	@Column(name = "cms_url_target", length = 50)
+	private String cmsUrlTarget;
+	
+	private String homeUrl;
+	
+	@Column(name = "home_url_target", length = 50)
+	private String homeUrlTarget;
 	
 	@Column(nullable = false)
 	private Integer ord;
