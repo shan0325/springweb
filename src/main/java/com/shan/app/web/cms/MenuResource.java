@@ -1,6 +1,7 @@
 package com.shan.app.web.cms;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -26,9 +27,10 @@ public class MenuResource {
 	private MenuService menuService;
 	
 	@PostMapping("/menu")
-	public ResponseEntity<Object> createMenu(@ModelAttribute @Valid MenuDTO.Create create) {
+	public ResponseEntity<Object> createMenu(HttpServletRequest request,
+			@ModelAttribute @Valid MenuDTO.Create create) throws Exception {
 		
-		Menu newMenu = menuService.createMenu(create);
+		Menu newMenu = menuService.createMenu(request, create);
 		
 		return new ResponseEntity<>(newMenu, HttpStatus.CREATED);
 	}

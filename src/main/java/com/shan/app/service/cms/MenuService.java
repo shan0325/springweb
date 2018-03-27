@@ -6,8 +6,11 @@ import java.util.Date;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +18,9 @@ import com.shan.app.domain.BoardManager;
 import com.shan.app.domain.Menu;
 import com.shan.app.repository.cms.BoardManagerRepository;
 import com.shan.app.repository.cms.MenuRepository;
+import com.shan.app.service.cms.dto.FileDTO;
 import com.shan.app.service.cms.dto.MenuDTO;
+import com.shan.app.service.util.UploadUtil;
 import com.shan.app.web.errors.EntityNotFoundException;
 
 @Service("cmsMenuService")
@@ -26,8 +31,14 @@ public class MenuService {
 	
 	@Resource(name = "cmsBoardManagerRepository")
 	private BoardManagerRepository boardManagerRepository;
+	
+	@Autowired
+	private UploadUtil uploadUtil;
+	
+	@Value("${upload.image.menu.path}")
+	private String UPLOAD_IMAGE_MENU_PATH;
 
-	public Menu createMenu(MenuDTO.Create create) {
+	public Menu createMenu(HttpServletRequest request, MenuDTO.Create create) throws Exception {
 
 		Menu menu = new Menu();
 		menu.setName(create.getName());
@@ -41,6 +52,12 @@ public class MenuService {
 		menu.setHomeUrlTarget(create.getHomeUrlTarget());
 		menu.setOrd(create.getOrd());
 		menu.setRegDate(new Date());
+		
+		//이미지 파일이 존재하면 업로드
+		FileDTO.Create imageFile = uploadUtil.uploadImage(create.getImage(), UPLOAD_IMAGE_MENU_PATH);
+		if(imageFile != null) {
+			menu.setMenuImagePath(imageFile.getSavePath() + File.separator + imageFile.getNewFileName());
+		}
 		
 		//메뉴타입이 게시판이면 boardManager 구해오기
 		String menuType = create.getMenuType();
@@ -79,27 +96,7 @@ public class MenuService {
 			newMenu.setHomeUrl(menu.getHomeUrl().replace("{menuId}", String.valueOf(newMenu.getId())));
 		}
 		
-		newMenu = menuRepository.save(newMenu);
-		
-		//이미지 파일이 존재하면 업로드
-		String path = "/upload/menuImage";
-		MultipartFile file = create.getImage();
-		if(!file.isEmpty()) {
-			File destPath = new File(path);
-			if(!destPath.exists()) {
-				destPath.mkdirs();
-			}
-			
-			File newFile = new File(path + File.separator + UUID.randomUUID() + ".txt");
-			try {
-				file.transferTo(newFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return newMenu;
-		
+		return menuRepository.save(newMenu);
 	}
 
 }

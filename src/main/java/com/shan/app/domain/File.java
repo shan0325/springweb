@@ -21,17 +21,17 @@ public class File {
 	@GeneratedValue
 	private Long id;
 	
-	@Column(name = "real_file_name", nullable = false) //실제 파일명
-	private String realFileName;
+	@Column(name = "original_file_name", nullable = false) //original 파일명
+	private String originalFileName;
 	
-	@Column(name = "new_file_name", nullable = false) //새로운 파일명
+	@Column(name = "new_file_name", nullable = false) //new 파일명
 	private String newFileName;
 	
 	@Column(name = "save_path", nullable = false)
 	private String savePath;
 	
 	@Column(nullable = false)
-	private String size;
+	private Long size;
 	
 	private String gubun;
 	
