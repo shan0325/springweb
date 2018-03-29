@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -205,6 +206,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(PasswordConfirmException.class)
 	public ResponseEntity<Object> handlePasswordConfirmException(PasswordConfirmException ex) {
 		String message = "비밀번호와 비밀번호확인이 일치하지않습니다.";
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
+	}
+	
+	@ExceptionHandler(ExtensionNotAllowedException.class)
+	public ResponseEntity<Object> handleExtensionNotAllowedException(ExtensionNotAllowedException ex) {
+		String message = "업로드 할 수 있는 확장자는 [" + ex.getAllowExtensions() + "] 입니다.";
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
+	}
+	
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public ResponseEntity<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
+		String message = "업로드 할 수 있는 최대 사이즈는 [" + ex.getMaxUploadSize() + "] 입니다.";
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
 	}
 	

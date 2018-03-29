@@ -2,12 +2,14 @@ package com.shan.app.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -35,8 +37,9 @@ public class Menu {
 	
 	private String description;
 	
-	@Column(name = "menu_image_path")
-	private String menuImagePath;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "image_file_id")
+	private File imageFile;
 	
 	@Column(name = "use_yn", length = 1, nullable = false)
 	private String useYn;
