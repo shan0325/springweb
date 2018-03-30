@@ -2,6 +2,7 @@ package com.shan.app.web.cms;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -18,10 +19,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockMultipartHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -44,6 +45,8 @@ public class MenuResourceTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
+	private MockMultipartFile multipartFile;
+	
 	@Before
 	public void setUp() throws Exception {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(wac)
@@ -55,6 +58,10 @@ public class MenuResourceTest {
 														.password("password", "1234"))
 												.andExpect(status().is3xxRedirection())
 												.andReturn().getRequest().getSession();
+		
+		File file = new File("src/main/resources/static/image/test.jpg");
+		FileInputStream fis = new FileInputStream(file);
+		multipartFile = new MockMultipartFile("image", file.getName(), MediaType.IMAGE_JPEG_VALUE, fis);
 	}
 	
 	@Test
@@ -73,10 +80,8 @@ public class MenuResourceTest {
 												.param("ord", "1")
 												.session(session));*/
 		
-		FileInputStream fis = new FileInputStream(new File("static/image/test.jpg"));
-		
 		ResultActions result = mockMvc.perform(fileUpload("/cms/1/menu")
-												.file(new MockMultipartFile("test", "test.jpg", MediaType.IMAGE_JPEG_VALUE, fis))
+												.file(this.multipartFile)
 												.param("parentId", "1")
 												.param("name", "메뉴관리")
 												.param("useYn", "Y")
@@ -111,10 +116,9 @@ public class MenuResourceTest {
 	
 	@Test
 	public void createMaxUploadSizeExceededException() throws Exception {
-		FileInputStream fis = new FileInputStream(new File("src/main/resources/static/image/test.jpg"));
-		MockMultipartFile multipartFile = new MockMultipartFile("test", "test.jpg", "multipart/mixed", fis);
-		
-		System.out.println("multipartFile = " + multipartFile);
+		File file = new File("src/main/resources/static/image/test.jpg");
+		FileInputStream fis = new FileInputStream(file);
+		MockMultipartFile multipartFile = new MockMultipartFile("image", file.getName(), MediaType.IMAGE_JPEG_VALUE, fis);
 		
 		ResultActions result = mockMvc.perform(fileUpload("/cms/1/menu")
 												.file(multipartFile)

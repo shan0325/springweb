@@ -217,7 +217,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
 	public ResponseEntity<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
-		String message = "업로드 할 수 있는 최대 사이즈는 [" + ex.getMaxUploadSize() + "] 입니다.";
+		String message = "업로드 할 수 있는 최대 사이즈는 " + ex.getMaxUploadSize() + " bytes 입니다.";
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
 	}
 	

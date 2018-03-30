@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ import com.shan.app.web.errors.EntityNotFoundException;
 
 @Service("cmsMenuService")
 public class MenuService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MenuService.class);
 	
 	@Resource(name = "cmsMenuRepository")
 	private MenuRepository menuRepository;
@@ -52,15 +56,9 @@ public class MenuService {
 		
 		//이미지 파일이 존재하면 업로드
 		FileDTO.Create imageFile = uploadUtil.uploadImage(create.getImage(), UPLOAD_IMAGE_MENU_PATH);
+		logger.debug("imageFile = " + imageFile);
 		if(imageFile != null) {
-			File file = new File();
-			file.setOriginalFileName(imageFile.getOriginalFileName());
-			file.setNewFileName(imageFile.getNewFileName());
-			file.setSavePath(imageFile.getSavePath());
-			file.setSize(imageFile.getSize());
-			file.setGubun("MENU");
-			file.setRegDate(new Date());
-			menu.setImageFile(file);
+			menu.setImageMenuPath(imageFile.getSavePath() + "/" + imageFile.getNewFileName());
 		}
 		
 		//메뉴타입이 게시판이면 boardManager 구해오기

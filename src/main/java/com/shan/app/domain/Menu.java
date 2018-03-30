@@ -37,9 +37,8 @@ public class Menu {
 	
 	private String description;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "image_file_id")
-	private File imageFile;
+	@Column(name = "image_menu_path")
+	private String imageMenuPath;
 	
 	@Column(name = "use_yn", length = 1, nullable = false)
 	private String useYn;
