@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -20,6 +18,9 @@ public class File {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@Column(name = "refer_id")
+	private Long referId;
 	
 	@Column(name = "original_file_name", nullable = false) //original 파일명
 	private String originalFileName;
@@ -41,7 +42,4 @@ public class File {
 	@Column(name = "update_date")
 	private Date updateDate;
 	
-	@ManyToOne
-	@JoinColumn(name = "board_id", nullable = false)
-	private Board board;
 }

@@ -55,7 +55,7 @@ public class MenuService {
 		menu.setRegDate(new Date());
 		
 		//이미지 파일이 존재하면 업로드
-		FileDTO.Create imageFile = uploadUtil.uploadImage(create.getImage(), UPLOAD_IMAGE_MENU_PATH);
+		FileDTO.Create imageFile = uploadUtil.uploadImage(request, create.getImage(), UPLOAD_IMAGE_MENU_PATH);
 		logger.debug("imageFile = " + imageFile);
 		if(imageFile != null) {
 			menu.setImageMenuPath(imageFile.getSavePath() + "/" + imageFile.getNewFileName());

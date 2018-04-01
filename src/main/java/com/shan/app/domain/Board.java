@@ -84,6 +84,6 @@ public class Board {
 	@JoinColumn(name = "board_manager_id", nullable = false)
 	private BoardManager boardManager;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "board")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<File> boards;
 }

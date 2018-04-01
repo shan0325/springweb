@@ -116,7 +116,7 @@ public class MenuResourceTest {
 	
 	@Test
 	public void createMaxUploadSizeExceededException() throws Exception {
-		File file = new File("src/main/resources/static/image/test.jpg");
+		File file = new File("src/main/resources/static/image/test2.jpg");
 		FileInputStream fis = new FileInputStream(file);
 		MockMultipartFile multipartFile = new MockMultipartFile("image", file.getName(), MediaType.IMAGE_JPEG_VALUE, fis);
 		

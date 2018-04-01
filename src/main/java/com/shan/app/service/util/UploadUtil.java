@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +27,7 @@ public class UploadUtil {
 	@Value("${upload.image.size}")
 	private long UPLOAD_IMAGE_SIZE;
 	
-	public FileDTO.Create uploadImage(MultipartFile multipartFile, String path) throws Exception {
+	public FileDTO.Create uploadImage(HttpServletRequest request, MultipartFile multipartFile, String path) throws Exception {
 		
 		FileDTO.Create create = null;
 		if(multipartFile != null && !multipartFile.isEmpty()) {
@@ -33,6 +35,7 @@ public class UploadUtil {
 			String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
 			String newFileName = System.currentTimeMillis() + UUID.randomUUID().toString() + "." + originalFileExtension;
 			long fileSize = multipartFile.getSize();
+			String realPath = request.getSession().getServletContext().getRealPath(path);
 			
 			//파일 확장자 체크
 			String[] types = UPLOAD_IMAGE_TYPE.split(",");
@@ -56,12 +59,13 @@ public class UploadUtil {
 			}
 			
 			//폴더 없으면 생성
-			File dir = new File(path);
+			logger.debug("realPath = " + realPath);
+			File dir = new File(realPath);
 			if(!dir.exists()) {
 				dir.mkdirs();
 			}
 			
-			multipartFile.transferTo(new File(path + File.separator + newFileName));
+			multipartFile.transferTo(new File(realPath + File.separator + newFileName));
 			
 			create = new FileDTO.Create();
 			create.setOriginalFileName(originalFileName);
