@@ -1,6 +1,7 @@
 package com.shan.app.service.cms;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.shan.app.domain.BoardManager;
-import com.shan.app.domain.File;
 import com.shan.app.domain.Menu;
 import com.shan.app.repository.cms.BoardManagerRepository;
 import com.shan.app.repository.cms.MenuRepository;
@@ -91,14 +91,76 @@ public class MenuService {
 			newMenu = menuRepository.save(menu);
 		}
 		
-		if(!StringUtils.isEmpty(menu.getCmsUrl())) {
-			newMenu.setCmsUrl(menu.getCmsUrl().replace("{menuId}", String.valueOf(newMenu.getId())));
-		}
-		if(!StringUtils.isEmpty(menu.getHomeUrl())) {
-			newMenu.setHomeUrl(menu.getHomeUrl().replace("{menuId}", String.valueOf(newMenu.getId())));
-		}
+		newMenu.setCmsUrl(replaceURLMenuIdFormat(newMenu.getCmsUrl(), newMenu.getId()));
+		newMenu.setHomeUrl(replaceURLMenuIdFormat(newMenu.getHomeUrl(), newMenu.getId()));
 		
 		return menuRepository.save(newMenu);
 	}
+	
+	/**
+	 * url내 "{menuId}" 를 실제 menuId로 치환
+	 * @param url
+	 * @param id
+	 * @return
+	 */
+	public String replaceURLMenuIdFormat(String url, Long id) {
+		String newUrl = null;
+		if(!StringUtils.isEmpty(url) && id != null) {
+			newUrl = url.replace("{menuId}", String.valueOf(id));
+		} 
+		return newUrl;
+	}
 
+	public Menu updateMenu(HttpServletRequest request, Long id, MenuDTO.Update update) throws Exception {
+		
+		Menu menu = getMenu(id);
+		menu.setName(update.getName());
+		menu.setDescription(update.getDescription());
+		menu.setUseYn(update.getUseYn());
+		menu.setMenuGubun(update.getMenuGubun());
+		menu.setMenuType(update.getMenuType());
+		menu.setCmsUrl(replaceURLMenuIdFormat(update.getCmsUrl(), id));
+		menu.setCmsUrlTarget(update.getCmsUrlTarget());
+		menu.setHomeUrl(replaceURLMenuIdFormat(update.getHomeUrl(), id));
+		menu.setHomeUrlTarget(update.getHomeUrlTarget());
+		menu.setOrd(update.getOrd());
+		menu.setUpdateDate(new Date());
+		
+		//이미지 파일이 존재하면 업로드
+		FileDTO.Create imageFile = uploadUtil.uploadImage(request, update.getImage(), UPLOAD_IMAGE_MENU_PATH);
+		logger.debug("imageFile = " + imageFile);
+		if(imageFile != null) {
+			menu.setImageMenuPath(imageFile.getSavePath() + "/" + imageFile.getNewFileName());
+		}
+		
+		//메뉴타입이 게시판이면 boardManager 구해오기
+		String menuType = update.getMenuType();
+		if("BOARD".equals(menuType)) {
+			BoardManager boardManager = boardManagerRepository.findOne(update.getBoardManagerId());
+			if(boardManager == null) {
+				throw new EntityNotFoundException(BoardManager.class, "boardManager", String.valueOf(update.getBoardManagerId()));
+			}
+			menu.setBoardManager(boardManager);
+		}
+				
+		return menuRepository.save(menu);
+	}
+
+	public List<Menu> getMenus() {
+		
+		return menuRepository.findAll();
+	}
+
+	public Menu getMenu(Long id) {
+		Menu menu = menuRepository.findOne(id);
+		if(menu == null) {
+			throw new EntityNotFoundException(Menu.class, "id", String.valueOf(id));
+		}
+		return menu;
+	}
+
+	public void deleteMenu(Long id) {
+		
+		menuRepository.delete(getMenu(id));
+	}
 }

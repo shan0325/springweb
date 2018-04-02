@@ -210,6 +210,15 @@ public class AdminResourceTest {
 	}
 	
 	@Test
+	public void getAdminEntityNotFoundExceptionTest() throws Exception {
+		ResultActions result = mockMvc.perform(get("/cms/1/admin/0")
+										.session(session));
+		
+		result.andDo(print());
+		result.andExpect(status().isNotFound());
+	}
+	
+	@Test
 	public void deleteAdminTest() throws Exception {
 		ResultActions result = mockMvc.perform(delete("/cms/1/admin/1")
 										.session(session));

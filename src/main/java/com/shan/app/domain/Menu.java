@@ -44,10 +44,10 @@ public class Menu {
 	private String useYn;
 	
 	@Column(name = "menu_gubun", length = 50, nullable = false)
-	private String menuGubun;
+	private String menuGubun; //all, cms, home 구분
 	
 	@Column(name = "menu_type", length = 50, nullable = false)
-	private String menuType;
+	private String menuType; //list:목록, url:링크, board:게시판, contents:컨텐츠
 	
 	private String cmsUrl;
 	

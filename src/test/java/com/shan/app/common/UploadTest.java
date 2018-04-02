@@ -1,4 +1,4 @@
-package com.shan.app.web.cms;
+package com.shan.app.common;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

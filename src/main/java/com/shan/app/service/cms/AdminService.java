@@ -63,7 +63,7 @@ public class AdminService {
 		for(String auth : authorities) {
 			Authority authority = authorityRepository.findOneByAuthority(auth);
 			if(authority == null) {
-				throw new EntityNotFoundException(Authority.class, "authority", auth);
+				throw new EntityNotFoundException(Authority.class, "id", auth);
 			}
 			admin.addAuthority(authority);
 		}
@@ -78,11 +78,7 @@ public class AdminService {
 	
 	public Admin updateAdmin(Long id, Update adminDTO) {
 		
-		Admin admin = adminRepository.findOne(id);
-		if(admin == null) {
-			throw new EntityNotFoundException(Admin.class, "admin", String.valueOf(id));
-		}
-		
+		Admin admin = getAdmin(id);
 		admin.setName(adminDTO.getName());
 		admin.setEmail(adminDTO.getEmail());
 		admin.setHp(adminDTO.getHp());
@@ -96,7 +92,7 @@ public class AdminService {
 		for(String auth : authorities) {
 			Authority authority = authorityRepository.findOneByAuthority(auth);
 			if(authority == null) {
-				throw new EntityNotFoundException(Authority.class, "authority", auth);
+				throw new EntityNotFoundException(Authority.class, "id", auth);
 			}
 			authoritySet.add(authority);
 		}
@@ -110,11 +106,16 @@ public class AdminService {
 	}
 
 	public Admin getAdmin(Long id) {
-		return adminRepository.findOne(id);
+		Admin admin = adminRepository.findOne(id);
+		if(admin == null) {
+			throw new EntityNotFoundException(Admin.class, "id", String.valueOf(id));
+		}
+		return admin;
 	}
 
 	public void deleteAdmin(Long id) {
-		adminRepository.delete(id);
+		
+		adminRepository.delete(getAdmin(id));
 	}
 
 }

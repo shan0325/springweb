@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -84,6 +85,7 @@ public class Board {
 	@JoinColumn(name = "board_manager_id", nullable = false)
 	private BoardManager boardManager;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<File> boards;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "refer_id")
+	private List<File> files;
 }
