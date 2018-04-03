@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ResourceServerConfig.class);
+	private final Logger logger = LoggerFactory.getLogger(ResourceServerConfig.class);
 
 	@Value("${resource.id:spring-boot-application}")
 	private String resourceId;

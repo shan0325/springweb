@@ -20,7 +20,7 @@ import com.shan.app.web.errors.EntityNotFoundException;
 @Service("homeCustomUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
 
-	private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+	private final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
 	@Resource(name="cmsAdminRepository")
 	private AdminRepository adminRepository;

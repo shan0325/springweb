@@ -25,7 +25,7 @@ import com.shan.app.web.errors.EntityNotFoundException;
 @Service("cmsMenuService")
 public class MenuService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MenuService.class);
+	private final Logger logger = LoggerFactory.getLogger(MenuService.class);
 	
 	@Resource(name = "cmsMenuRepository")
 	private MenuRepository menuRepository;
@@ -148,7 +148,8 @@ public class MenuService {
 
 	public List<Menu> getMenus() {
 		
-		return menuRepository.findAll();
+		//return menuRepository.findAll();
+		return menuRepository.findAllByQueryDsl();
 	}
 
 	public Menu getMenu(Long id) {

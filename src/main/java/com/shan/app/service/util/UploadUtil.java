@@ -19,7 +19,7 @@ import com.shan.app.web.errors.ExtensionNotAllowedException;
 @Component
 public class UploadUtil {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UploadUtil.class);
+	private final Logger logger = LoggerFactory.getLogger(UploadUtil.class);
 
 	@Value("${upload.image.type}")
 	private String UPLOAD_IMAGE_TYPE;

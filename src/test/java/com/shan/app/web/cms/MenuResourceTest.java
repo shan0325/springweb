@@ -78,14 +78,14 @@ public class MenuResourceTest {
 												.session(session));*/
 		
 		ResultActions result = mockMvc.perform(fileUpload("/cms/1/menu")
-												.param("parentId", "1")
-												.param("name", "코드관리")
+												.param("parentId", "3")
+												.param("name", "관리자관리")
 												.param("useYn", "Y")
 												.param("menuGubun", "CMS")
 												.param("menuType", "URL")
 												.param("cmsUrl", "/cms/{menuId}/code")
 												.param("cmsUrlTarget", "_self")
-												.param("ord", "3")
+												.param("ord", "1")
 												.session(session));
 		
 		result.andDo(print());

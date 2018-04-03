@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.shan.app.domain.Menu;
 
 @Repository("cmsMenuRepository")
-public interface MenuRepository extends JpaRepository<Menu, Long> {
+public interface MenuRepository extends JpaRepository<Menu, Long>, MenuRepositoryCustom {
+	
 
 }
