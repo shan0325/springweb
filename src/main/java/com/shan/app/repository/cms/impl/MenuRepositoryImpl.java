@@ -42,6 +42,7 @@ public class MenuRepositoryImpl extends QueryDslRepositorySupport implements Men
 			
 			Menu execMenu = parMenu;
 			int lastOrd = 0;
+			long lastMenu = 0;
 			boolean ing = true;
 			int stat = 1;
 			while(ing) {
@@ -50,7 +51,7 @@ public class MenuRepositoryImpl extends QueryDslRepositorySupport implements Men
 				
 				if(stat == 2) {
 					for(Menu menu : menus) {
-						if(execMenu.getId() == menu.getParentId()) {
+						if(execMenu.getId() == menu.getParentId() && lastMenu < menu.getId()) {
 							childs.add(menu);
 						}
 					}
@@ -65,8 +66,32 @@ public class MenuRepositoryImpl extends QueryDslRepositorySupport implements Men
 				
 				lastOrd = 0;
 				if(childs.size() > 0) {
-					child = childs.get(0);
+					int tempOrd = 0;
+					int index = 0;
+					for(Menu ch : childs) {
+						if(index == 0) {
+							tempOrd = ch.getOrd();
+							child = ch;
+						} else {
+							if(ch.getOrd() < tempOrd) {
+								child = ch;
+							}
+						}
+						index++;
+					}
 					
+					int ordCnt = 0;
+					for(Menu ch : childs) {
+						if(child.getOrd() == ch.getOrd()) {
+							ordCnt++;
+						}
+					}
+										
+					if(ordCnt > 1) {
+						stat = 2;
+					} else {
+						stat = 1;
+					}
 					
 					execMenu = child;
 					hirMenus.add(child);
@@ -75,6 +100,7 @@ public class MenuRepositoryImpl extends QueryDslRepositorySupport implements Men
 					for(Menu menu : menus) {
 						if(execMenu.getParentId() == menu.getId()) {
 							lastOrd = execMenu.getOrd();
+							lastMenu = execMenu.getId();
 							execMenu = menu;
 						}
 					}
