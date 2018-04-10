@@ -66,6 +66,8 @@ public class MenuRepositoryImpl extends QueryDslRepositorySupport implements Men
 				lastOrd = 0;
 				if(childs.size() > 0) {
 					child = childs.get(0);
+					
+					
 					execMenu = child;
 					hirMenus.add(child);
 				} else {
