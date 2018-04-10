@@ -1,7 +1,10 @@
 package com.shan.app.repository.cms.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
@@ -34,53 +37,54 @@ public class MenuRepositoryImpl extends QueryDslRepositorySupport implements Men
 		List<Menu> parMenus = query2.where(qMenu.depth.eq(0)).orderBy(qMenu.ord.asc(), qMenu.id.asc()).fetch();
 		
 		List<Menu> hirMenus = new ArrayList<Menu>();
-		Menu execMenu = new Menu();
-		boolean ing = true;
 		for(Menu parMenu : parMenus) {
 			hirMenus.add(parMenu);
 			
-			execMenu = parMenu;
-			int curOrd = 0;
-			int tempOrd = 0;
-			ing = true;
+			Menu execMenu = parMenu;
+			int lastOrd = 0;
+			boolean ing = true;
+			int stat = 1;
 			while(ing) {
 				Menu child = null;
-				int index = 0;
-				for(Menu menu : menus) {
-					if(execMenu.getId() == menu.getParentId() &&  menu.getOrd() > curOrd) {
-						if (index == 0) {
-							tempOrd = menu.getOrd();
-							child = menu;
-						}
-						
-						if(menu.getOrd() < tempOrd) {
-							child = menu;
-						}
-						index++;
-					}
-				}
-				logger.debug("child = " + child);
-				curOrd = 0;
-				tempOrd = 0;
+				List<Menu> childs = new ArrayList<Menu>();
 				
-				if(child != null) {
-					hirMenus.add(child);
-					execMenu = child;
-					continue;
+				if(stat == 2) {
+					for(Menu menu : menus) {
+						if(execMenu.getId() == menu.getParentId()) {
+							childs.add(menu);
+						}
+					}
 				} else {
 					for(Menu menu : menus) {
+						if(execMenu.getId() == menu.getParentId() && lastOrd < menu.getOrd()) {
+							childs.add(menu);
+						}
+					}
+				}
+				logger.debug("childs = " + childs);
+				
+				lastOrd = 0;
+				if(childs.size() > 0) {
+					child = childs.get(0);
+					execMenu = child;
+					hirMenus.add(child);
+				} else {
+					//현재 메뉴의 부모 메뉴 찾기
+					for(Menu menu : menus) {
 						if(execMenu.getParentId() == menu.getId()) {
-							curOrd = execMenu.getOrd();
+							lastOrd = execMenu.getOrd();
 							execMenu = menu;
 						}
 					}
+					
+					continue;
 				}
 				
 				int breakCnt = 0;
 				if(execMenu.getParentId() == 0) {
 					for(Menu menu : menus) {
 						if(execMenu.getId() == menu.getParentId()) {
-							if(curOrd < menu.getOrd()) {
+							if(lastOrd < menu.getOrd()) {
 								breakCnt++;
 							}
 						}
