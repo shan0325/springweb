@@ -2,6 +2,7 @@ package com.shan.app.web.cms;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -69,6 +70,20 @@ public class GroupCodeResourceTest {
 		
 		result.andDo(print());
 		result.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void updateTest() throws Exception {
+		GroupCodeDTO.Update update = new GroupCodeDTO.Update();
+		update.setGroupCodeName("메뉴타입22");
+		update.setUseYn("N");
+		
+		mockMvc.perform(put("/cms/1/group-code/2")
+						.session(session)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(update)))
+				.andDo(print())
+				.andExpect(status().isOk());
 	}
 	
 	

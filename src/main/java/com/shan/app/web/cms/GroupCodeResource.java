@@ -7,7 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +34,14 @@ public class GroupCodeResource {
 		GroupCode newGroupCode = groupCodeService.createGroupCode(create);
 		
 		return new ResponseEntity<>(newGroupCode, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/group-code/{id}")
+	public ResponseEntity<Object> updateGroupCode(@PathVariable Long id, 
+			@RequestBody @Valid GroupCodeDTO.Update update) {
+		
+		GroupCode updateGroupCode = groupCodeService.updateGroupCode(id, update);
+		
+		return new ResponseEntity<>(updateGroupCode, HttpStatus.OK);
 	}
 }

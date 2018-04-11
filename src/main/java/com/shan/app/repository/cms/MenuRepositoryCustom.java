@@ -6,5 +6,7 @@ import com.shan.app.domain.Menu;
 
 public interface MenuRepositoryCustom {
 
-	List<Menu> findAllByQueryDsl();
+	List<Menu> findDefaultHierarchicalMenu();
+	
+	List<Menu> findQueryDslHierarchicalMenu();
 }

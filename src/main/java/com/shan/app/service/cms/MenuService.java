@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import com.shan.app.service.util.UploadUtil;
 import com.shan.app.web.errors.EntityNotFoundException;
 
 @Service("cmsMenuService")
+@Transactional
 public class MenuService {
 	
 	private final Logger logger = LoggerFactory.getLogger(MenuService.class);
@@ -149,7 +151,8 @@ public class MenuService {
 	public List<Menu> getMenus() {
 		
 		//return menuRepository.findAll();
-		return menuRepository.findAllByQueryDsl();
+		//return menuRepository.findDefaultHierarchicalMenu();
+		return menuRepository.findQueryDslHierarchicalMenu();
 	}
 
 	public Menu getMenu(Long id) {

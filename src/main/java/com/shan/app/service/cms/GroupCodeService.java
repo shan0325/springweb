@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.shan.app.domain.GroupCode;
 import com.shan.app.repository.cms.GroupCodeRepository;
 import com.shan.app.service.cms.dto.GroupCodeDTO;
+import com.shan.app.service.cms.dto.GroupCodeDTO.Update;
 import com.shan.app.web.errors.EntityDuplicatedException;
+import com.shan.app.web.errors.EntityNotFoundException;
 
 @Service("cmsGroupCodeService")
 public class GroupCodeService {
@@ -31,6 +33,23 @@ public class GroupCodeService {
 		groupCode.setRegDate(new Date());
 		
 		return groupCodeRepository.save(groupCode);
+	}
+
+	public GroupCode updateGroupCode(Long id, Update update) {
+		GroupCode groupCode = getGroupCode(id);
+		groupCode.setGroupCodeName(update.getGroupCodeName());
+		groupCode.setUseYn(update.getUseYn());
+		groupCode.setUpdateDate(new Date());
+		
+		return groupCodeRepository.save(groupCode);
+	}
+	
+	public GroupCode getGroupCode(Long id) {
+		GroupCode groupCode = groupCodeRepository.findOne(id);
+		if(groupCode == null) {
+			throw new EntityNotFoundException(GroupCode.class, "id", String.valueOf(id));
+		}
+		return groupCode;
 	}
 	
 	
