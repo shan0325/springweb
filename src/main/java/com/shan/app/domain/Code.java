@@ -2,8 +2,10 @@ package com.shan.app.domain;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,7 +41,7 @@ public class Code {
 	@Column(name = "update_date")
 	private Date updateDate;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "group_code_id", nullable = false)
 	private GroupCode groupCode;
 }

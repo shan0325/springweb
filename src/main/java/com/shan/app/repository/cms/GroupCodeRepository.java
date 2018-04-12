@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.shan.app.domain.GroupCode;
 
 @Repository("cmsGroupCodeRepository")
-public interface GroupCodeRepository extends JpaRepository<GroupCode, Long> {
+public interface GroupCodeRepository extends JpaRepository<GroupCode, Long>, GroupCodeRepositoryCustom {
 
 	GroupCode findOneByGroupCode(String groupCode);
 

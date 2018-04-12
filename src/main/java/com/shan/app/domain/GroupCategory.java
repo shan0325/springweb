@@ -36,7 +36,4 @@ public class GroupCategory {
 	
 	@Column(name = "update_date")
 	private Date updateDate;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "groupCategory")
-	private List<Category> categorys;
 }

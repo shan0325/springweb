@@ -1,6 +1,8 @@
 package com.shan.app.web.cms;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -42,6 +44,7 @@ public class GroupCodeResourceTest {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
+
 	
 	@Before
 	public void setUp() throws Exception {
@@ -78,13 +81,37 @@ public class GroupCodeResourceTest {
 		update.setGroupCodeName("메뉴타입22");
 		update.setUseYn("N");
 		
-		mockMvc.perform(put("/cms/1/group-code/2")
-						.session(session)
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(objectMapper.writeValueAsString(update)))
+		ResultActions result = mockMvc.perform(put("/cms/1/group-code/2")
+										.session(session)
+										.contentType(MediaType.APPLICATION_JSON)
+										.content(objectMapper.writeValueAsString(update)));
+		
+		result.andDo(print());
+		result.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void getGroupCodes() throws Exception {
+		mockMvc.perform(get("/cms/1/group-codes")
+						.session(session))
 				.andDo(print())
 				.andExpect(status().isOk());
 	}
 	
+	@Test
+	public void getGroupCode() throws Exception {
+		mockMvc.perform(get("/cms/1/group-code/1")
+						.session(session))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void deleteGroupCode() throws Exception {
+		mockMvc.perform(delete("/cms/1/group-code/1")
+						.session(session))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
 	
 }

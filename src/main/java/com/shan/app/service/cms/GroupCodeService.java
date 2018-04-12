@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shan.app.domain.GroupCode;
@@ -52,5 +54,20 @@ public class GroupCodeService {
 		return groupCode;
 	}
 	
+	public GroupCodeDTO.Response findGroupCodeByQueryDsl(Long id) {
+		GroupCodeDTO.Response groupCode = groupCodeRepository.findGroupCodeByQueryDsl(id);
+		if(groupCode == null) {
+			throw new EntityNotFoundException(GroupCode.class, "id", String.valueOf(id));
+		}
+		return groupCode;
+	}
+
+	public Page<GroupCode> getGroupCodes(Pageable pageable) {
+		return groupCodeRepository.findAll(pageable);
+	}
+
+	public void deleteGroupCode(Long id) {
+		groupCodeRepository.delete(getGroupCode(id));
+	}
 	
 }
