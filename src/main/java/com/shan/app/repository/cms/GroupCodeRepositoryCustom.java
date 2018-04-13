@@ -1,9 +1,9 @@
 package com.shan.app.repository.cms;
 
-import com.shan.app.service.cms.dto.GroupCodeDTO;
+import com.shan.app.domain.GroupCode;
 
 public interface GroupCodeRepositoryCustom {
 	
-	GroupCodeDTO.Response findGroupCodeByQueryDsl(Long id);
+	GroupCode findGroupCodeWithCodesByQueryDsl(Long id);
 
 }

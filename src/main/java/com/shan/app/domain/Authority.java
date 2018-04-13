@@ -1,8 +1,11 @@
 package com.shan.app.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,11 +19,17 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
-@Data
 @Table(name = "tb_authority")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Authority {
 	
 	@Id
@@ -36,7 +45,7 @@ public class Authority {
 	@Column(name = "authority_name", nullable = false, length = 200)
 	private String authorityName;
 	
-//	@ManyToMany(mappedBy = "authorities")
+//	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //	private Set<Admin> admins = new HashSet<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)

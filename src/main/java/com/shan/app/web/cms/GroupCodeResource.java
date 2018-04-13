@@ -56,7 +56,7 @@ public class GroupCodeResource {
 	
 	@GetMapping("/group-code/{id}")
 	public ResponseEntity<Object> getGroupCode(@PathVariable Long id) {
-		GroupCodeDTO.Response groupCode = groupCodeService.findGroupCodeByQueryDsl(id);
+		GroupCode groupCode = groupCodeService.getGroupCodeWithCodes(id);
 		return new ResponseEntity<>(groupCode, HttpStatus.OK);
 	}
 	

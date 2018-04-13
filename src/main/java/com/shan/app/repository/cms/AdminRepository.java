@@ -12,8 +12,9 @@ import com.shan.app.domain.Admin;
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 
 	Admin findOneByUserId(String userId);
-
+	
 	@EntityGraph(attributePaths="authorities")
 	Optional<Admin> findOneWithAuthoritiesByUserId(String userId);
+	
 
 }

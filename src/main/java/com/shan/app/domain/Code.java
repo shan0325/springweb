@@ -12,18 +12,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_code")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Code {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
 
-	@Column(length = 20, nullable = false)
+	@Column(length = 20, unique = true, nullable = false)
 	private String code;
 	
 	@Column(length = 100, nullable = false)

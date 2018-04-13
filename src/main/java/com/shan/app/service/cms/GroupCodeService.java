@@ -3,6 +3,7 @@ package com.shan.app.service.cms;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import com.shan.app.web.errors.EntityDuplicatedException;
 import com.shan.app.web.errors.EntityNotFoundException;
 
 @Service("cmsGroupCodeService")
+@Transactional
 public class GroupCodeService {
 
 	@Resource(name = "cmsGroupCodeRepository")
@@ -54,8 +56,8 @@ public class GroupCodeService {
 		return groupCode;
 	}
 	
-	public GroupCodeDTO.Response findGroupCodeByQueryDsl(Long id) {
-		GroupCodeDTO.Response groupCode = groupCodeRepository.findGroupCodeByQueryDsl(id);
+	public GroupCode getGroupCodeWithCodes(Long id) {
+		GroupCode groupCode = groupCodeRepository.findGroupCodeWithCodesByQueryDsl(id);
 		if(groupCode == null) {
 			throw new EntityNotFoundException(GroupCode.class, "id", String.valueOf(id));
 		}

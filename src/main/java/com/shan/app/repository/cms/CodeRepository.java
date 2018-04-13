@@ -8,4 +8,6 @@ import com.shan.app.domain.Code;
 @Repository("cmsCodeRepository")
 public interface CodeRepository extends JpaRepository<Code, Long> {
 
+	Code findOneByCode(String code);
+
 }
