@@ -1,9 +1,20 @@
 package com.shan.app.service.cms.dto;
 
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.shan.app.domain.GroupCode;
 
 import lombok.Data;
 
@@ -36,7 +47,17 @@ public class CodeDTO {
 		private String useYn;
 		@NotNull(message = "순서를 입력해주세요.")
 		private Integer ord;
-		@NotNull(message = "그룹코드 아이디가 존재하지않습니다.")
+	}
+	
+	@Data
+	public static class Response {
+		private Long id;
+		private String code;
+		private String codeName;
+		private String useYn;
+		private Integer ord;
+		private Date regDate;
+		private Date updateDate;
 		private Long groupCodeId;
 	}
 

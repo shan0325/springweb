@@ -15,11 +15,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_code")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -50,4 +48,11 @@ public class Code {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "group_code_id", nullable = false)
 	private GroupCode groupCode;
+
+	@Override
+	public String toString() {
+		return "Code [id=" + id + ", code=" + code + ", codeName=" + codeName + ", useYn=" + useYn + ", ord=" + ord
+				+ ", regDate=" + regDate + ", updateDate=" + updateDate + "]";
+	}
+	
 }

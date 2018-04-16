@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shan.app.domain.Code;
@@ -25,6 +27,7 @@ public class CodeService {
 	
 	@Resource(name = "cmsCodeRepository")
 	private CodeRepository codeRepository;
+	
 
 	public Code createCode(Create create) {
 		//상위 그룹코드가 존재하는 체크
@@ -50,8 +53,29 @@ public class CodeService {
 	}
 
 	public Code updateCode(Long id, Update update) {
+		Code code = getCode(id);
+		code.setCodeName(update.getCodeName());
+		code.setOrd(update.getOrd());
+		code.setUseYn(update.getUseYn());
+		code.setUpdateDate(new Date());
 		
-		return null;
+		return codeRepository.save(code);
+	}
+	
+	public Code getCode(Long id) {
+		Code code = codeRepository.findOne(id);
+		if(code == null) {
+			throw new EntityNotFoundException(Code.class, "id", String.valueOf(id));
+		}
+		return code;
+	}
+
+	public Page<Code> getCodes(Pageable pageable) {
+		return codeRepository.findAll(pageable);
+	}
+
+	public void deleteCode(Long id) {
+		codeRepository.delete(getCode(id));
 	}
 
 }

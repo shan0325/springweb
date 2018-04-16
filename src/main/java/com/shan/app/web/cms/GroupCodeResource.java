@@ -43,9 +43,9 @@ public class GroupCodeResource {
 	public ResponseEntity<Object> updateGroupCode(@PathVariable Long id, 
 			@RequestBody @Valid GroupCodeDTO.Update update) {
 		
-		GroupCode updateGroupCode = groupCodeService.updateGroupCode(id, update);
+		GroupCode updatedGroupCode = groupCodeService.updateGroupCode(id, update);
 		
-		return new ResponseEntity<>(updateGroupCode, HttpStatus.OK);
+		return new ResponseEntity<>(updatedGroupCode, HttpStatus.OK);
 	}
 	
 	@GetMapping("/group-codes")

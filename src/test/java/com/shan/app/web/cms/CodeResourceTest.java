@@ -1,7 +1,10 @@
 package com.shan.app.web.cms;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -69,6 +72,42 @@ public class CodeResourceTest {
 						.content(objectMapper.writeValueAsString(create)))
 				.andDo(print())
 				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void updateTest() throws Exception {
+		CodeDTO.Update update = new CodeDTO.Update();
+		update.setCodeName("컨텐츠22");
+		update.setOrd(3);
+		update.setUseYn("N");
+		
+		mockMvc.perform(put("/cms/1/code/7")
+						.session(session)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(update)))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void getCodes() throws Exception {
+		mockMvc.perform(get("/cms/1/codes").session(session))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void getCode() throws Exception {
+		mockMvc.perform(get("/cms/1/code/1").session(session))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void deleteCode() throws Exception {
+		mockMvc.perform(delete("/cms/1/code/1").session(session))
+				.andDo(print())
+				.andExpect(status().isOk());
 	}
 
 }
