@@ -28,7 +28,7 @@ import com.shan.app.service.cms.dto.CodeDTO;
 @RequestMapping("/cms/{menuId}")
 public class CodeResource {
 	
-	private Logger logger = LoggerFactory.getLogger(CodeResource.class);
+	private final Logger logger = LoggerFactory.getLogger(CodeResource.class);
 	
 	@Resource(name = "cmsCodeService")
 	private CodeService codeService;

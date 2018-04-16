@@ -29,7 +29,7 @@ import com.shan.app.web.errors.PasswordConfirmException;
 @RequestMapping("/cms/{menuId}")
 public class AdminResource {
 	
-	public static final Logger logger = LoggerFactory.getLogger(AdminResource.class);
+	private final Logger logger = LoggerFactory.getLogger(AdminResource.class);
 	
 	@Resource(name="cmsAdminService")
 	private AdminService adminService;

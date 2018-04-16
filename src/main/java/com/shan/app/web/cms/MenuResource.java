@@ -26,7 +26,7 @@ import com.shan.app.service.cms.dto.MenuDTO;
 @RequestMapping("/cms/{menuId}")
 public class MenuResource {
 	
-	public static final Logger logger = LoggerFactory.getLogger(MenuResource.class);
+	private final Logger logger = LoggerFactory.getLogger(MenuResource.class);
 	
 	@Resource(name = "cmsMenuService")
 	private MenuService menuService;
