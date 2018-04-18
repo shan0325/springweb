@@ -107,7 +107,7 @@ public class SecurityConfig {
 		}
 	}
 	
-	@Configuration
+	/*@Configuration
 	@Order(3)
 	public static class App3ConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
@@ -129,6 +129,6 @@ public class SecurityConfig {
 	        authenticationProvider.setPasswordEncoder(passwordEncoder);
 	        return authenticationProvider;
 	    }
-	}
+	}*/
 	
 }
