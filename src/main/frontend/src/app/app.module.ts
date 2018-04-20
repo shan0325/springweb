@@ -11,7 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { CmsLoginComponent } from './cms/login/login.component';
-import { CmsHeaderComponent } from './cms/layouts/header/header.component';
+import { CmsNavbarComponent } from './cms/layouts/navbar/navbar.component';
 
 import { HomeLoginComponent } from './home/login/login.component';
 import { HomeHeaderComponent } from './home/layouts/header/header.component';
@@ -21,7 +21,7 @@ import { HomeHeaderComponent } from './home/layouts/header/header.component';
   declarations: [
     AppComponent,
     CmsLoginComponent,
-    CmsHeaderComponent,
+    CmsNavbarComponent,
     HomeLoginComponent,
     HomeHeaderComponent
   ],

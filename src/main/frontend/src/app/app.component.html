@@ -1,6 +1,8 @@
 <div *ngIf="curSite == 'cms'">
-    <cms-header></cms-header>
-    <router-outlet></router-outlet>
+    <cms-navbar></cms-navbar>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
 </div>
 
 <div *ngIf="curSite == 'home'">

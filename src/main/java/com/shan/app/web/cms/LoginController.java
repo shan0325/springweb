@@ -14,11 +14,7 @@ public class LoginController {
 	public String loginForm(HttpServletRequest request) {
 		String referer = request.getHeader("Referer");
 		request.getSession().setAttribute("prevPage", referer);
-		return "cms/login";
+		return "cms/login/login";
 	}
 	
-	@GetMapping("/main")
-	public String main() {
-		return "cms/main";
-	}
 }
