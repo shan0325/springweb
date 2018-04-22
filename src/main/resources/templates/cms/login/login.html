@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-  layout:decorator="mainLayout">
-<head>
-	<meta charset="UTF-8"/>
-	<title>로그인</title>
-</head>
-<body>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorator="layout/main_layout">
+
+<th:block layout:fragment="html_head">
+	<title>cms :: login</title>
+</th:block>
+
+<th:block layout:fragment="add_lib_css">
+
+</th:block>
+
+<th:block layout:fragment="custom_css">
+
+</th:block>
+
+<th:block layout:fragment="content_body">
 	<div class="container">
 		<form class="login-form" method="POST">
 			<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
+			<input type="hidden" name="loginRedirect" th:value="${loginredirectname}" />
+			<input type="hidden" name="exceptionmsgname" th:value="${exceptionmsgname}" />
 			<div class="row">
 				<div class="input-field col s12">
 					<input id="userId" type="text" name="userId" class="validate" /> 
@@ -25,5 +37,10 @@
 			<input class="login-btn waves-effect waves-light btn" type="submit"	value="로그인" />
 		</form>
 	</div>
-</body>
+</th:block>
+
+<th:block layout:fragment="custom_js">
+
+</th:block>
+
 </html>

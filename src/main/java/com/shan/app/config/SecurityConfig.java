@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -14,9 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.shan.app.security.CustomLoginSuccessHandler;
+import com.shan.app.security.CustomAuthenticationFailureHandler;
+import com.shan.app.security.CustomAuthenticationSuccessHandler;
 import com.shan.app.security.cms.CustomUserDetailsService;
 
 @EnableWebSecurity
@@ -45,24 +46,37 @@ public class SecurityConfig {
 			
 			http.antMatcher("/cms/**")
 					.authorizeRequests()
-						.antMatchers("/cms/login").permitAll()
-						.antMatchers("/cms/**").authenticated()
+						.anyRequest().authenticated()
 				.and()
 				.formLogin()
 					.loginPage("/cms/login")
 					.usernameParameter("userId")
 					.passwordParameter("password")
-					.loginProcessingUrl("/cms/login")
-					.defaultSuccessUrl("/cms/main")
+					.failureHandler(failureHandler())
 					.successHandler(successHandler())
-					.failureUrl("/cms/login")
+					.permitAll()
 				.and()
 				.logout();
 		}
 		
 		@Bean
 		public AuthenticationSuccessHandler successHandler() {
-			return new CustomLoginSuccessHandler("/cms/main");
+			CustomAuthenticationSuccessHandler successHandler = new CustomAuthenticationSuccessHandler();
+			successHandler.setTargetUrlParameter("loginRedirect");
+			successHandler.setUseReferer(true);
+			successHandler.setDefaultUrl("/cms/main");
+			return successHandler;
+		}
+		
+		@Bean
+		public AuthenticationFailureHandler failureHandler() {
+			CustomAuthenticationFailureHandler failureHandler = new CustomAuthenticationFailureHandler();
+			failureHandler.setLoginidname("userId");
+			failureHandler.setLoginpasswdname("password");
+			failureHandler.setLoginredirectname("loginRedirect");
+			failureHandler.setExceptionmsgname("securityexceptionmsg");
+			failureHandler.setDefaultFailureUrl("/cms/login?error=true");
+			return failureHandler;
 		}
 		
 		@Bean

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorator="layout/main_layout">
+
+<th:block layout:fragment="html_head">
+	<title>cms :: main</title>
+</th:block>
+
+<th:block layout:fragment="add_lib_css">
+
+</th:block>
+
+<th:block layout:fragment="custom_css">
+
+</th:block>
+
+<th:block layout:fragment="content_body">
+	<header th:include="fragments/main/main_sidemenu"></header>
+	
+	<div class="content-wrapper">
+		<div>this is main page</div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="custom_js">
+
+</th:block>
+
+</html>
