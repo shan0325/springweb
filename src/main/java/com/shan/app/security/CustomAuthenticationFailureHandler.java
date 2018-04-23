@@ -85,6 +85,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 		//Request 객체의 Attribute에 예외 메시지 저장
 		request.setAttribute(exceptionmsgname, exception.getMessage());
 		
+		System.out.println("userId = " + request.getAttribute("userId"));
+		System.out.println("securityexceptionmsg = " + request.getAttribute("securityexceptionmsg"));
+		
 		request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
 	}
 

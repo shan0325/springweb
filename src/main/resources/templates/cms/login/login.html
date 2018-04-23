@@ -18,7 +18,7 @@
 
 <th:block layout:fragment="content_body">
 	<div class="container">
-		<form class="login-form" method="POST">
+		<form id="login-form" class="login-form">
 			<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 			<input type="hidden" name="loginRedirect" th:value="${loginredirectname}" />
 			<input type="hidden" name="exceptionmsgname" th:value="${exceptionmsgname}" />
@@ -34,13 +34,21 @@
 					<label for="password">Password</label>
 				</div>
 			</div>
-			<input class="login-btn waves-effect waves-light btn" type="submit"	value="로그인" />
+			<input type="button" id="login-btn" class="login-btn waves-effect waves-light btn" value="로그인" />
 		</form>
 	</div>
 </th:block>
 
 <th:block layout:fragment="custom_js">
-
+	<script type="text/javascript">
+		$(function() {
+			$("#login-btn").on("click", function() {
+				$("#login-form").attr("method", "post");
+				$("#login-form").attr("action", "/cms/j_spring_security_check");
+				$("#login-form").submit();
+			});
+		});
+	</script>
 </th:block>
 
 </html>

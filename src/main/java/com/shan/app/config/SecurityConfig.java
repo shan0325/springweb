@@ -42,11 +42,8 @@ public class SecurityConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable();
-			
-			http.antMatcher("/cms/**")
-					.authorizeRequests()
-						.anyRequest().authenticated()
+			http.authorizeRequests()
+					.antMatchers("/cms/**").authenticated()
 				.and()
 				.formLogin()
 					.loginPage("/cms/login")
@@ -57,6 +54,8 @@ public class SecurityConfig {
 					.permitAll()
 				.and()
 				.logout();
+			
+			http.csrf().disable();
 		}
 		
 		@Bean
