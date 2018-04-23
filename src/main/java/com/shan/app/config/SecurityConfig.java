@@ -43,6 +43,8 @@ public class SecurityConfig {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 			http.authorizeRequests()
+					.antMatchers("/cms/loginprocess").permitAll()
+					.antMatchers("/cms/login").permitAll()
 					.antMatchers("/cms/**").authenticated()
 				.and()
 				.formLogin()

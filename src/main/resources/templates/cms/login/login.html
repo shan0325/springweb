@@ -18,7 +18,7 @@
 
 <th:block layout:fragment="content_body">
 	<div class="container">
-		<form id="login-form" class="login-form">
+		<form id="login-form" class="login-form" method="POST">
 			<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 			<input type="hidden" name="loginRedirect" th:value="${loginredirectname}" />
 			<input type="hidden" name="exceptionmsgname" th:value="${exceptionmsgname}" />
@@ -44,7 +44,7 @@
 		$(function() {
 			$("#login-btn").on("click", function() {
 				$("#login-form").attr("method", "post");
-				$("#login-form").attr("action", "/cms/j_spring_security_check");
+				$("#login-form").attr("action", "/cms/login");
 				$("#login-form").submit();
 			});
 		});
