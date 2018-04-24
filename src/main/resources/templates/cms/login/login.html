@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org" 
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorator="layout/main_layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
 
 <th:block layout:fragment="html_head">
 	<title>cms :: login</title>
@@ -13,15 +12,15 @@
 </th:block>
 
 <th:block layout:fragment="custom_css">
-
+	<link rel="stylesheet" th:href="@{/css/cms/login.css}" />
 </th:block>
 
 <th:block layout:fragment="content_body">
-	<div class="container">
-		<form id="login-form" class="login-form" method="POST">
-			<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
+	<!-- <div class="container">
+		<form id="login-form" class="login-form">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			<input type="hidden" name="loginRedirect" th:value="${loginredirectname}" />
-			<input type="hidden" name="exceptionmsgname" th:value="${exceptionmsgname}" />
+			
 			<div class="row">
 				<div class="input-field col s12">
 					<input id="userId" type="text" name="userId" class="validate" /> 
@@ -34,20 +33,56 @@
 					<label for="password">Password</label>
 				</div>
 			</div>
+			<div>
+				<p th:text="${securityexceptionmsg}">아이디 또는 비밀번호가 맞지않습니다.</p>
+				<p th:text="${#httpServletRequest.getContextPath()}"></p>
+			</div>
 			<input type="button" id="login-btn" class="login-btn waves-effect waves-light btn" value="로그인" />
 		</form>
+	</div> -->
+	
+	<div class="container">
+		<div class="row" id="pwd-container">
+			<div class="col-md-4"></div>
+
+			<div class="col-md-4">
+				<section class="login-form">
+					<form method="post" action="#" role="login">
+						<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
+						<input type="hidden" name="loginRedirect" th:value="${loginredirectname}" />
+						 
+						<img src="http://i.imgur.com/RcmcLv4.png" class="img-responsive" alt="" /> 
+						<input type="text" name="userId" class="form-control input-lg" placeholder="userId" required="required" autofocus="autofocus" /> 
+						<input type="password" class="form-control input-lg" id="password" placeholder="Password" required="required" />
+						
+						<div class="pwstrength_viewport_progress"></div>
+						<button type="submit" name="go"	class="btn btn-lg btn-primary btn-block">Sign in</button>
+						<div>
+							<a href="#">Create account</a> or <a href="#">reset password</a>
+						</div>
+					</form>
+
+					<div class="form-links">
+						<a href="#">www.website.com</a>
+					</div>
+				</section>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
 	</div>
 </th:block>
 
 <th:block layout:fragment="custom_js">
+	<script th:src="@{/js/cms/login.js}"></script>
+
 	<script type="text/javascript">
-		$(function() {
+		/* $(function() {
 			$("#login-btn").on("click", function() {
 				$("#login-form").attr("method", "post");
-				$("#login-form").attr("action", "/cms/login");
+				$("#login-form").attr("action", "/cms/login/process");
 				$("#login-form").submit();
 			});
-		});
+		}); */
 	</script>
 </th:block>
 

@@ -42,22 +42,22 @@ public class SecurityConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
+			http.csrf().disable();
+			
 			http.authorizeRequests()
-					.antMatchers("/cms/loginprocess").permitAll()
-					.antMatchers("/cms/login").permitAll()
+					.antMatchers("/cms/login/**").permitAll()
 					.antMatchers("/cms/**").authenticated()
 				.and()
 				.formLogin()
-					.loginPage("/cms/login")
+					.loginPage("/cms/login") //로그인 페이지
 					.usernameParameter("userId")
 					.passwordParameter("password")
+					.loginProcessingUrl("/cms/login/process") //로그인 폼 action
 					.failureHandler(failureHandler())
 					.successHandler(successHandler())
 					.permitAll()
 				.and()
 				.logout();
-			
-			http.csrf().disable();
 		}
 		
 		@Bean
