@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org" 
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorator="layout/main_layout">
-
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+	
 <th:block layout:fragment="html_head">
-	<title>cms :: main</title>
-</th:block>
+	<title>cms :: index</title>
+</th:block>	
 
 <th:block layout:fragment="add_lib_css">
 
 </th:block>
 
 <th:block layout:fragment="custom_css">
-
+	<style type="text/css">
+		/* Chart.js */
+		@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+	</style>
 </th:block>
 
 <th:block layout:fragment="content_body">
-	<header th:include="fragments/main/main_sidemenu"></header>
+	<th:block th:include="fragments/main/main_navbar"></th:block>
 	
 	<div class="content-wrapper">
-		<div>this is main page</div>
-	</div>
+		<div class="container-fluid">
+		  	<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
+		  	<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
+		</div><!-- /.container-fluid-->
+	</div><!-- /.content-wrapper-->
 </th:block>
 
 <th:block layout:fragment="custom_js">
-
+	
 </th:block>
 
 </html>

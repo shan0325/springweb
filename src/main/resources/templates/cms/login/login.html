@@ -16,31 +16,6 @@
 </th:block>
 
 <th:block layout:fragment="content_body">
-	<!-- <div class="container">
-		<form id="login-form" class="login-form">
-			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-			<input type="hidden" name="loginRedirect" th:value="${loginredirectname}" />
-			
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="userId" type="text" name="userId" class="validate" /> 
-					<label for="userId">id</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s12">
-					<input id="password" type="password" name="password" class="validate" /> 
-					<label for="password">Password</label>
-				</div>
-			</div>
-			<div>
-				<p th:text="${securityexceptionmsg}">아이디 또는 비밀번호가 맞지않습니다.</p>
-				<p th:text="${#httpServletRequest.getContextPath()}"></p>
-			</div>
-			<input type="button" id="login-btn" class="login-btn waves-effect waves-light btn" value="로그인" />
-		</form>
-	</div> -->
-	
 	<div class="container">
 		<div class="row" id="pwd-container">
 			<div class="col-md-4"></div>
@@ -57,7 +32,7 @@
 						<input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" required="required" th:value="${password}" />
 						
 						<ul th:if="${securityexceptionmsg}">
-							<li><span style="color: #d52929;" th:value="${securityexceptionmsg}">Bad credentials</span></li>
+							<li><span style="color: #d52929;">아이디 또는 비밀번호가 맞지않습니다.</span></li>
 						</ul>
 						
 						<div class="pwstrength_viewport_progress"></div>
@@ -81,10 +56,10 @@
 	<script th:src="@{/js/cms/loginPwstrength.js}"></script>
 	<script type="text/javascript">
 		$(function() {
+			$("footer.sticky-footer").css("width", "100%");
+			
 			$("#login-btn").on("click", function() {
-				$("#login-form").attr("method", "post");
-				$("#login-form").attr("action", "/cms/login/process");
-				$("#login-form").submit();
+				loginSubmit();
 			});
 		});
 		
@@ -98,7 +73,7 @@
 			
 			$("#login-form").attr("method", "post");
 			$("#login-form").attr("action", "/cms/login/process");
-			$("#login-form").submit();
+			return true;
 		}
 	</script>
 </th:block>
