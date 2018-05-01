@@ -57,7 +57,9 @@ public class SecurityConfig {
 					.successHandler(successHandler())
 					.permitAll()
 				.and()
-				.logout();
+				.logout()
+				.logoutUrl("/cms/logout")
+				.permitAll();
 		}
 		
 		@Bean

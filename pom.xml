@@ -55,6 +55,10 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>net.sourceforge.nekohtml</groupId>
 			<artifactId>nekohtml</artifactId>
 		</dependency>
@@ -122,27 +126,6 @@
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${querydsl.version}</version>
-		</dependency>
-		
-		<!-- JQuery -->
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>jquery</artifactId>
-		    <version>3.3.1-1</version>
-		</dependency>
-		
-		<!-- JQuery UI -->
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>jquery-ui</artifactId>
-		    <version>1.12.1</version>
-		</dependency>
-		
-		<!-- Bootstrap -->
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>bootstrap</artifactId>
-		    <version>4.1.0</version>
 		</dependency>
 		
 	</dependencies>

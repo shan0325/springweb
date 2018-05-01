@@ -1,6 +1,6 @@
 <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+    <a class="navbar-brand" th:href="@{/cms/main}">Start Bootstrap</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -181,7 +181,7 @@
             <a class="dropdown-item small" href="#">View all alerts</a>
           </div>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <form class="form-inline my-2 my-lg-0 mr-lg-2">
             <div class="input-group">
               <input class="form-control" type="text" placeholder="Search for...">
@@ -192,11 +192,48 @@
               </span>
             </div>
           </form>
-        </li>
+        </li> -->
         <li class="nav-item">
+          <a class="nav-link"><i class="fa fa-fw fa-desktop"></i> System</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          	<i class="fa fa-fw fa-user"></i><span sec:authentication="name">UserId</span>
+          </a>
+          <div class="dropdown-menu col-xs-1">
+            <a href="#" class="dropdown-item">
+              <i class="fa fa-fw fa-user-circle"></i>User Profile</a>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
+              <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+            </a>
+          </div>
+        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>
+  
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Logged in user: <b sec:authentication="name">[[${#httpServletRequest.remoteUser}]]</b></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a id="logoutBtn" class="btn btn-primary" th:href="@{/cms/logout}">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org" 
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/main_layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="layout/main_layout">
 	
 <th:block layout:fragment="html_head">
 	<title>cms :: index</title>
@@ -23,8 +25,7 @@
 	
 	<div class="content-wrapper">
 		<div class="container-fluid">
-		  	<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
-		  	<hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
+			<span sec:authentication="name"></span>
 		</div><!-- /.container-fluid-->
 	</div><!-- /.content-wrapper-->
 </th:block>
