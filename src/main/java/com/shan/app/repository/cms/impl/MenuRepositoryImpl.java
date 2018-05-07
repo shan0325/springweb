@@ -147,12 +147,26 @@ public class MenuRepositoryImpl extends QueryDslRepositorySupport implements Men
 
 	@Override
 	public List<Menu> findQueryDslHierarchicalMenu() {
+		return findQueryDslHierarchicalMenuById(null);
+	}
+
+	@Override
+	public List<Menu> findQueryDslHierarchicalMenuById(Long systemMenuId) {
+
 		QMenu qMenu = QMenu.menu;
+		List<Menu> parMenus = new ArrayList<Menu>();
 		
-		List<Menu> parMenus = from(qMenu)
-								.where(qMenu.depth.eq(0))
-								.orderBy(qMenu.ord.asc(), qMenu.id.asc())
-								.fetch();
+		if(systemMenuId == null) {
+			parMenus = from(qMenu)
+					.where(qMenu.depth.eq(0))
+					.orderBy(qMenu.ord.asc(), qMenu.id.asc())
+					.fetch();
+		} else {
+			parMenus = from(qMenu)
+					.where(qMenu.id.eq(systemMenuId))
+					.orderBy(qMenu.ord.asc(), qMenu.id.asc())
+					.fetch();
+		}
 		
 		List<Menu> hirMenus = new ArrayList<Menu>();
 		for(Menu parMenu : parMenus) {

@@ -7,6 +7,6 @@ import com.shan.app.domain.Menu;
 
 @Repository("cmsMenuRepository")
 public interface MenuRepository extends JpaRepository<Menu, Long>, MenuRepositoryCustom {
-	
+
 
 }

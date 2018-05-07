@@ -9,4 +9,6 @@ public interface MenuRepositoryCustom {
 	List<Menu> findDefaultHierarchicalMenu();
 	
 	List<Menu> findQueryDslHierarchicalMenu();
+	
+	List<Menu> findQueryDslHierarchicalMenuById(Long systemMenuId);
 }

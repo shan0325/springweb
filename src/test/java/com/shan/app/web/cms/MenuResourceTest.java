@@ -50,7 +50,7 @@ public class MenuResourceTest {
 										.addFilter(springSecurityFilterChain)
 										.build();
 		
-		this.session = (MockHttpSession) mockMvc.perform(formLogin("/cms/login")
+		this.session = (MockHttpSession) mockMvc.perform(formLogin("/cms/login/process")
 														.user("userId", "admin")
 														.password("password", "1234"))
 												.andExpect(status().is3xxRedirection())
@@ -150,7 +150,7 @@ public class MenuResourceTest {
 	
 	@Test
 	public void updateMenuTest() throws Exception {
-		mockMvc.perform(fileUpload("/cms/1/menu/8")
+		mockMvc.perform(fileUpload("/cms/1/menu/2")
 						.file(this.multipartFile)
 						.param("name", "메뉴관리22")
 						.param("useYn", "Y")
