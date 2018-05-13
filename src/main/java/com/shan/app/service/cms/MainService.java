@@ -17,7 +17,10 @@ import com.shan.app.domain.Authority;
 import com.shan.app.domain.Menu;
 import com.shan.app.repository.cms.AuthorityRepository;
 import com.shan.app.repository.cms.MenuRepository;
+import com.shan.app.security.cms.SecurityAdminUser;
 import com.shan.app.service.util.SecurityUtil;
+import com.shan.app.web.errors.AuthorityNotExistException;
+import com.shan.app.web.errors.MenuNotExistException;
 
 @Service("cmsMainService")
 @Transactional
@@ -40,20 +43,42 @@ public class MainService {
 		Iterator<GrantedAuthority> iterator = user.getAuthorities().iterator();
 		while(iterator.hasNext()) {
 			GrantedAuthority grantedAuthority = iterator.next();
-			authorityName = grantedAuthority.getAuthority();
+			authorityName = grantedAuthority.getAuthority().replace(SecurityAdminUser.ROLE_PREFIX, "");
 		}
 		
-		if(StringUtils.isEmpty(authorityName)) {
-			return "";
+		Authority authority = authorityRepository.findOneByAuthority(authorityName);
+		if(authority == null) {
+			throw new AuthorityNotExistException("권한이 존재하지 않습니다.");
 		} else {
-			Authority authority = authorityRepository.findOneByAuthority(authorityName);
+			List<Menu> existMenus = authority.getMenus();
 			
+			Menu redirectMenu = null;
 			for(Menu menu : menus) {
+				boolean next = true;
+				Long menuId = menu.getId();
 				
+				if("LIST".equals(menu.getMenuType())) continue;
+				
+				for(Menu emenu : existMenus) {
+					Long emenuId = emenu.getId();
+					if(menuId == emenuId) {
+						next = false;
+						break;
+					}
+				}
+				
+				if(!next) {
+					redirectMenu = menu;
+					break;
+				}
 			}
+			
+			if(redirectMenu == null) {
+				throw new MenuNotExistException("이동할 메뉴가 존재하지 않습니다.");
+			}
+			
+			return redirectMenu.getCmsUrl();
 		}
-		
-		return null;
 	}
 
 	

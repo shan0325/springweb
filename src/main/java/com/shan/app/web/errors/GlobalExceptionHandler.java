@@ -241,6 +241,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
 	}
 	
+	@ExceptionHandler(AuthorityNotExistException.class)
+	public ResponseEntity<Object> handleAuthorityNotExistException(AuthorityNotExistException ex) {
+		String message = ex.getMessage();
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
+	}
+	
+	@ExceptionHandler(MenuNotExistException.class)
+	public ResponseEntity<Object> handleMenuNotExistException(MenuNotExistException ex) {
+		String message = ex.getMessage();
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
+	}
+	
 	private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
 		return new ResponseEntity<>(apiError, apiError.getStatus());
 	}

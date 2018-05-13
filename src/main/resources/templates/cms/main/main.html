@@ -21,11 +21,26 @@
 </th:block>
 
 <th:block layout:fragment="content_body">
-	<th:block th:include="fragments/main/main_navbar"></th:block>
-	
 	<div class="content-wrapper">
 		<div class="container-fluid">
 			<span sec:authentication="name"></span>
+			
+			<div>[(${#httpServletRequest.requestURI})]</div>
+			
+			<input type="text" th:value="${#httpServletRequest.requestURI}"/>
+			
+			<div th:with="value1='1111', value2=false" th:text="|${value1}, ${value2}|"></div>
+			
+			<div th:with="uri=${#httpServletRequest.requestURI}">
+				<div th:if="${#strings.substring(uri, 1, 4) == 'cms'}" th:text="cms페이지"></div>
+			</div>
+			
+			<p th:text="${#dates.createNow()}"></p>
+			
+			<p th:text="${currentUri}"></p>
+			<p th:text="${today}"></p>
+			
+			
 		</div><!-- /.container-fluid-->
 	</div><!-- /.content-wrapper-->
 </th:block>
