@@ -77,6 +77,7 @@ public class MainService {
 				throw new MenuNotExistException("이동할 메뉴가 존재하지 않습니다.");
 			}
 			
+			logger.debug("cmsUrl = " + redirectMenu.getCmsUrl());
 			return redirectMenu.getCmsUrl();
 		}
 	}

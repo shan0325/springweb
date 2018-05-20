@@ -1,7 +1,0 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:with="currentUri=${#httpServletRequest.requestURI}">
-	<th:block th:if="${#strings.substring(currentUri, 1, 4) == 'cms'}">
-		<head th:replace="fragments/cms/main/main_header :: mainHead"> </head>
-		<body th:replace="fragments/cms/main/main_body :: mainBody"> </body>
-	</th:block>
-</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/cms/header :: cmsHead"> </head>
+	<body th:fragment="cmsBody" class="fixed-nav sticky-footer bg-dark" id="page-top">
+		<th:block layout:fragment="content_body"></th:block>
+		
+		<th:block th:include="fragments/common/c_body_script"></th:block>
+	
+		<th:block layout:fragment="custom_js"></th:block>
+	</body>
+</html>
