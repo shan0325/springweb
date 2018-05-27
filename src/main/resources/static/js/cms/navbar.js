@@ -12,16 +12,22 @@ $(document).ready(function() {
 
 function goSystemView() {
 	$.ajax({
-		type: "POST",
+		type: "GET",
 		url: "/cms/1/system",
+		cache: false,
+		dataType:"JSON",
 		success: function(data) {
-			alert(JSON.stringify(data));
-		},
-		error: function(xhr, status, error) {
-			
-			alert(JSON.stringify(xhr));
-			alert(status);
-			alert(error);
+			var redirectUrl = BASE_CONTEXT_PATH + data.cmsUrl;
+			if(!gfn_isNull(redirectUrl)) {
+				var target = data.cmsUrlTarget;
+				if(target == "_blank") {
+					window.open(redirectUrl);
+				} else {
+					window.location.href = redirectUrl;
+				}
+			} else {
+				alert("이동할 메뉴가 존재하지않습니다.");
+			}
 		}
 	});
 }

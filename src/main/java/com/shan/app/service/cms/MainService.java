@@ -35,7 +35,7 @@ public class MainService {
 	private AuthorityRepository authorityRepository;
 	
 
-	public String getSystemRedirectUrl(Long systemMenuId) {
+	public Menu getSystemRedirectMenu(Long systemMenuId) {
 		List<Menu> menus = menuRepository.findQueryDslHierarchicalMenuById(systemMenuId);
 		
 		String authorityName = "";
@@ -78,7 +78,7 @@ public class MainService {
 			}
 			
 			logger.debug("cmsUrl = " + redirectMenu.getCmsUrl());
-			return redirectMenu.getCmsUrl();
+			return redirectMenu;
 		}
 	}
 
