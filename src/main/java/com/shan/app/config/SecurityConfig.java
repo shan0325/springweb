@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.shan.app.security.CustomAuthenticationFailureHandler;
 import com.shan.app.security.CustomAuthenticationSuccessHandler;
+import com.shan.app.security.cms.CustomInvalidSessionStrategy;
 import com.shan.app.security.cms.CustomUserDetailsService;
 
 @EnableWebSecurity
@@ -60,6 +61,10 @@ public class SecurityConfig {
 				.logout()
 				.logoutUrl("/cms/logout")
 				.permitAll();
+			
+//			http.sessionManagement()
+//					.invalidSessionStrategy(new CustomInvalidSessionStrategy("/cms/login"))
+//					.maximumSessions(1);
 		}
 		
 		@Bean
