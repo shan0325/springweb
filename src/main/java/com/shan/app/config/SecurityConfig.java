@@ -13,12 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.shan.app.security.AjaxSessionCheckFilter;
 import com.shan.app.security.CustomAuthenticationFailureHandler;
 import com.shan.app.security.CustomAuthenticationSuccessHandler;
-import com.shan.app.security.cms.CustomInvalidSessionStrategy;
 import com.shan.app.security.cms.CustomUserDetailsService;
 
 @EnableWebSecurity
@@ -65,6 +66,15 @@ public class SecurityConfig {
 //			http.sessionManagement()
 //					.invalidSessionStrategy(new CustomInvalidSessionStrategy("/cms/login"))
 //					.maximumSessions(1);
+			
+			http.addFilterAfter(ajaxSessionCheckFilter(), ExceptionTranslationFilter.class);
+		}
+		
+		@Bean
+		public AjaxSessionCheckFilter ajaxSessionCheckFilter() {
+			AjaxSessionCheckFilter ajaxSessionCheckFilter = new AjaxSessionCheckFilter();
+			ajaxSessionCheckFilter.setAjaxHeader("AJAX");
+			return ajaxSessionCheckFilter;
 		}
 		
 		@Bean
