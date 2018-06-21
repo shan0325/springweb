@@ -44,9 +44,10 @@ public class SecurityConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable();
-			
-			http.authorizeRequests()
+			http.csrf()
+					.disable()
+				.addFilterAfter(ajaxSessionCheckFilter(), ExceptionTranslationFilter.class)
+				.authorizeRequests()
 					.antMatchers("/cms/login/**").permitAll()
 					.antMatchers("/cms/**").authenticated()
 				.and()
@@ -62,12 +63,6 @@ public class SecurityConfig {
 				.logout()
 				.logoutUrl("/cms/logout")
 				.permitAll();
-			
-//			http.sessionManagement()
-//					.invalidSessionStrategy(new CustomInvalidSessionStrategy("/cms/login"))
-//					.maximumSessions(1);
-			
-			http.addFilterAfter(ajaxSessionCheckFilter(), ExceptionTranslationFilter.class);
 		}
 		
 		@Bean
