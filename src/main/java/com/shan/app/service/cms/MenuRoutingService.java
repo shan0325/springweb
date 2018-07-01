@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,21 +21,21 @@ import com.shan.app.service.util.SecurityUtil;
 import com.shan.app.web.errors.AuthorityNotExistException;
 import com.shan.app.web.errors.MenuNotExistException;
 
-@Service("cmsMainService")
+@Service("cmsMenuRoutingService")
 @Transactional
-public class MainService {
+public class MenuRoutingService {
 	
-	private final Logger logger = LoggerFactory.getLogger(MainService.class);
-	
+	private final Logger logger = LoggerFactory.getLogger(MenuRoutingService.class);
+
 	@Resource(name="cmsMenuRepository")
 	private MenuRepository menuRepository;
 	
 	@Resource(name="cmsAuthorityRepository")
 	private AuthorityRepository authorityRepository;
 	
-
-	public Menu getSystemRedirectMenu(Long systemMenuId) {
-		List<Menu> menus = menuRepository.findQueryDslHierarchicalMenuById(systemMenuId);
+	
+	public Menu getMenuRouting(Long execMenuId) {
+		List<Menu> menus = menuRepository.findQueryDslHierarchicalMenuById(execMenuId);
 		
 		String authorityName = "";
 		User user = SecurityUtil.getUser();
@@ -81,6 +80,5 @@ public class MainService {
 			return redirectMenu;
 		}
 	}
-
 	
 }

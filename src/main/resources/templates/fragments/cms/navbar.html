@@ -193,11 +193,14 @@
             </div>
           </form>
         </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="/cms/1/system" onclick="fn_menuRouting('1'); return false;"><i class="fa fa-fw fa-desktop"></i> System</a>
+        </li>
         <li class="dropdown">
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           	<i class="fa fa-fw fa-user"></i><span sec:authentication="name">UserId</span>
           </a>
-          <div class="dropdown-menu">
+          <div class="dropdown-menu last-dropdown">
             <a href="#" class="dropdown-item">
               <i class="fa fa-fw fa-user-circle"></i>User Profile
             </a>
@@ -207,9 +210,7 @@
             </a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" id="system"><i class="fa fa-fw fa-desktop"></i> System</a>
-        </li>
+        
         <!-- <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>

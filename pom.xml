@@ -89,6 +89,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+		</dependency>
+		
 		<!-- log4j 로그 -->
 		<dependency>
 		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
